@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><title>Fool Me Once · The Guru · print and play</title>
+<html><head><meta charset="utf-8"><title>Fool Me Once · print and play</title>
 <style>
 @page{size:A4;margin:0}
 *{box-sizing:border-box}
@@ -7,85 +7,110 @@ body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#000
 .page{width:210mm;height:297mm;page-break-after:always;position:relative;overflow:hidden}
 .grid{position:absolute;left:10.5mm;top:16.5mm;display:grid;grid-template-columns:repeat(3,63mm);grid-template-rows:repeat(3,88mm)}
 .foot{position:absolute;left:10.5mm;top:7mm;font-size:8pt;color:#555}
-.c{width:63mm;height:88mm;border:.2mm solid #999;padding:5mm;display:flex;flex-direction:column;gap:2.5mm;overflow:hidden;position:relative}
+.c{width:63mm;height:88mm;border:.2mm solid #999;padding:4.5mm;display:flex;flex-direction:column;gap:2mm;overflow:hidden;position:relative}
 .c .strip{position:absolute;left:0;right:0;top:0;height:3mm}
 .c .k{font-size:7.5pt;font-weight:700;margin-top:2mm;display:flex;justify-content:space-between;gap:2mm}
-.c .n{font-size:20pt;font-weight:800;line-height:1}
-.c .t{font-size:17pt;font-weight:800;line-height:1.05;letter-spacing:-.02em}
+.c .n{font-size:30pt;font-weight:800;line-height:1}
+.c .t{font-size:16pt;font-weight:800;line-height:1.05;letter-spacing:-.02em}
 .c .q{font-size:15pt;font-weight:800;line-height:1.12;letter-spacing:-.01em;margin:auto 0}
-.c .s{font-size:11pt;font-style:italic;line-height:1.25}
+.c .s{font-size:10.5pt;font-style:italic;line-height:1.25}
 .c .p{font-size:9.5pt;line-height:1.3}
-.c .l{font-size:7.5pt;font-weight:700;color:#555;margin-bottom:.5mm}
-.c .ask{border:.4mm solid #000;border-radius:2mm;padding:2.5mm;font-size:10pt;font-weight:700;line-height:1.25;margin-top:auto}
-.c .logo{font-size:8pt;font-weight:800;margin-top:auto}
+.c .sm{font-size:8pt;line-height:1.25}
+.c .l{font-size:7pt;font-weight:700;color:#555;margin-bottom:.4mm}
+.c .ex{margin:0;padding-left:3.5mm;font-size:7.9pt;font-style:italic;line-height:1.25}
+.c .not{border-left:.8mm solid #FF3B30;padding-left:2mm;font-size:7.7pt;line-height:1.25}
+.c .ask{border:.4mm solid #000;border-radius:2mm;padding:1.6mm 2mm;font-size:8.2pt;font-weight:700;line-height:1.22;margin-top:auto}
+.c .logo{font-size:7.5pt;font-weight:800;margin-top:auto}
 .c.mid{justify-content:center;align-items:center;text-align:center}
-.c .huge{font-size:80pt;font-weight:800;line-height:1}
-.c .bk{font-size:18pt;font-weight:800;line-height:1}
+.c .bk{font-size:17pt;font-weight:800;line-height:1}
 .c.inv{background:#000;color:#fff}
-.doc{padding:14mm 16mm;font-size:10.5pt;line-height:1.38}
-.doc h1{font-size:26pt;margin:0 0 1mm;letter-spacing:-.02em}
-.doc h2{font-size:13pt;margin:4.5mm 0 1.5mm}
-.doc p{margin:0 0 1.8mm}
+.c .list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:1.1mm;font-size:8.6pt;line-height:1.15}
+.c .list b{display:inline-block;width:4.5mm}
+.doc{padding:13mm 15mm;font-size:10pt;line-height:1.36}
+.doc h1{font-size:24pt;margin:0 0 1mm;letter-spacing:-.02em}
+.doc h2{font-size:12.5pt;margin:4mm 0 1.3mm}
+.doc p{margin:0 0 1.6mm}
 .doc ol,.doc ul{margin:0;padding-left:5.5mm}
-.doc li{margin-bottom:1.3mm}
+.doc li{margin-bottom:1.1mm}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:8mm}
 .box{border:.4mm solid #000;border-radius:2mm;padding:3mm 4mm}
 table{border-collapse:collapse;width:100%;font-size:9pt}
-td,th{border:.2mm solid #000;padding:1.1mm 1.5mm;text-align:left;height:6.3mm}
+td,th{border:.2mm solid #000;padding:1mm 1.5mm;text-align:left;height:6mm}
 th{font-size:8pt}
-td.x,th.x{width:17mm}
-</style></head><body><script src="cards.js"></script><script>
-var lang=new URLSearchParams(location.search).get('lang')==='es'?'es':'en';
-var P={en:{trick:"Trick",topic:"Topic",role:"Role",cit:"Citizen",citDo:"Say what you really think about the topic. Then catch the Guru.",guru:"Guru",guruIs:"Your trick is number",guruDo:"Slip it into what you say. Don't say its name. Not too obvious, not too hidden.",
- slot:"Trick number",slotBk:"Put a trick card under each number.",what:"What it is",where:"Where you see it",ask:"Ask the table",q:"Who wins if I believe this?",qBk:"The Question",qDo:"Once per round. Grab this card first and ask it to anyone. They have to answer.",
+td.x,th.x{width:15mm}
+</style></head><body><script src="cards.js"></script><script src="extra.js"></script><script>
+var lang=new URLSearchParams(location.search).get('lang')==='es'?'es':'en',E=FMO_EXTRA;
+var P={en:{trick:"Trick",topic:"Topic",role:"Role",cit:"Citizen",citDo:"Say what you really think about the topic. Then catch the Guru.",citTrick:"Your trick card is NOT the Guru's trick.",guru:"Guru",guruDo:"Slip your trick into what you say. Don't say its name. Not too obvious, not too hidden.",
+ what:"What it is",sounds:"It sounds like",not:"Not the same as",ask:"Ask the table",q:"Who wins if I believe this?",qBk:"The Question",qDo:"Once per round, during the debate. Grab it and ask anyone. They have to answer.",
+ prod:"Sell this",home:"Sell this (from home)",buyer:"You're buying as",packBk:"Trick pack",
  sheet:"Cut along the grey lines. Print double-sided, flip on the long edge.",front:"front",back:"back",
- sub:"The Guru. A card game for the family table. 3 to 6 players, age 11 and up, about 4 minutes a round. Playtest version 0.1.",
- idea:"One of you is secretly the Guru, slipping a trick into the conversation. Everyone else has to catch who it is and name the trick.",
- setupH:"Set up",setup:["Put the number cards 1 to 5 in a row. Shuffle the trick cards and put one under each number, name side up. Read the five tricks out loud.","Shuffle the topic cards. Put the Question card in the middle of the table.","Give everyone a line on the score sheet."],
- roundH:"A round",round:["<b>Topic.</b> Whoever has the fewest points draws two topics, picks one and reads it out. (First round: the youngest.) That player will speak first.","<b>Roles.</b> Take one Citizen card per player, minus one. Shuffle the five Guru cards face down and add one without looking. Shuffle and deal one card each. Look at yours in secret. The Guru's card has a number: that's the trick to use.","<b>Talk.</b> Going round, everyone says one or two sentences about the topic. Citizens say what they really think. The Guru slips the trick in, without saying its name or reading the card. With three players, go round twice.","<b>The Question.</b> Once per round, whoever grabs the Question card first asks anyone: “Who wins if I believe this?” They have to answer.","<b>Vote.</b> Count “three, two, one, fool!” All at once: one hand points at the Guru, the other shows the trick number with fingers. The Guru bluffs along. Hold still.","<b>Reveal.</b> The Guru shows the role card. Flip the trick card, read the back out loud and answer its question together.","<b>Next.</b> Write down the points. Put the used trick at the bottom of the deck and a new one in its place. Read it out loud."],
- scoreH:"Scoring",score:["<b>Right trick: 2 points</b>, even if you pointed at the wrong person.","<b>Right person: 1 point.</b>","<b>The Guru: 2 points</b> only if some players name the trick, but not all. Too obvious (everyone) or too hidden (nobody): 0."],
- endH:"Winning",end:"Play five rounds (three on a busy night). Most points wins. On a tie, whoever named more tricks.",
- albumH:"The trick album",album:"The first time you name a trick, tick it in your album. Collect all 25 and you're Immune.",
- houseH:"House rules",house:["What a Citizen says is their real opinion. Nobody gets told off for it later.","Anyone can say “Pause” if a topic touches something real. Stop and talk. That's the best move in the game.","The Guru can say things they don't believe. That's the job."],
- weekH:"Week mode (optional)",week:"On Monday everyone draws a secret trick card. Slip it into a normal conversation during the week. If someone catches you and names it, they score 2. A wrong accusation gives 1 point to the accused. If you used it and nobody caught it by Sunday dinner, tell the table when: you score 2.",
- testH:"For the playtest",test:"Tell us: which rule was confusing? Which card? Did anyone ask to play again?",
- scoreSheet:"Score sheet",player:"Player",total:"Total",albumSheet:"Trick album: tick the tricks each player has named",r:"R"},
-es:{trick:"Truco",topic:"Tema",role:"Papel",cit:"Ciudadano",citDo:"Di lo que piensas de verdad sobre el tema. Luego, pilla al Gurú.",guru:"Gurú",guruIs:"Tu truco es el número",guruDo:"Mételo en lo que digas. Sin decir su nombre. Ni muy evidente ni muy escondido.",
- slot:"Truco número",slotBk:"Poned una carta de truco debajo de cada número.",what:"Qué es",where:"Dónde lo ves",ask:"Pregunta para la mesa",q:"¿Y quién gana si me lo creo?",qBk:"La pregunta",qDo:"Una vez por ronda. El primero que coge esta carta se la hace a quien quiera. Hay que contestar.",
+ title:"Fool Me Once.",sub:"Two card games about the tricks used to sell to you and persuade you online. Playtest version 0.2, 13 November 2026.",
+ kit:"In the kit: 6 role cards (1 Guru, 5 Citizens), 24 trick cards in three packs of 8, 3 pack cards, the Question card, 40 topic cards, 32 product cards and 12 buyer cards. Both games use the same trick cards.",
+ gH:"The Guru · 3 to 6 players · 14+ · about 6 minutes a round",
+ gIdea:"One of you secretly slips a trick into the conversation. Catch who, and name the trick.",
+ gSet:"Pick a pack (pack 1 the first time) and put its pack card in the middle: it lists the 8 tricks with their numbers. Read them out loud. Put the Question card next to it. Shuffle the topic cards.",
+ gRound:["<b>Topic.</b> Whoever has the fewest points draws two topics, picks one and speaks first. First round: the youngest.","<b>Deal.</b> Take one role card per player: the Guru and the rest Citizens. Shuffle and deal one each, face down. Shuffle the pack's 8 trick cards and deal one each, face down. Look at both in secret. Nobody shows their cards.","<b>Talk.</b> In order, one or two sentences each. Citizens say what they really think. The Guru slips their trick in without saying its name.","<b>Debate, two minutes.</b> Ask anyone anything. Every Citizen knows their own trick card is not the Guru's; you can say which one you hold, or bluff. Whoever grabs the Question card first asks anyone “Who wins if I believe this?” Once per round.","<b>Another lap?</b> If most of the table wants it, one more sentence each. Once per round.","<b>Vote.</b> Count “three, two, one, fool!”. All at once: one hand points at the Guru, the other shows the trick number. The Guru bluffs along.","<b>Reveal.</b> The Guru flips both cards. Read the back of the trick out loud and answer its question together."],
+ gScore:["<b>Right trick: 2 points</b>, even if you pointed at the wrong person.","<b>Right person: 1 point.</b>","<b>The Guru: 2 points</b> if some players name the trick, but not all.","<b>Nobody named it?</b> The Guru says the sentence where they used it, and the table votes with thumbs. Really there: <b>1 point</b>. Not there: 0.","<b>Everyone named it:</b> too obvious, 0."],
+ gEnd:"Five rounds (three on a busy night). Most points wins. Tie: whoever named more tricks.",
+ pH:"The Pitch · 3 to 8 players · all ages · about 4 minutes a seller",
+ pIdea:"Sell the table something ridiculous using a real trick. The others have to name it.",
+ pSet:"Pick a pack and put its pack card in the middle. Shuffle the product cards (ridiculous ones, home ones, or both) and the buyer cards.",
+ pRound:["<b>The buyer.</b> One player is the buyer this round; it goes round the table. Draw a product and a buyer card and read them out: “I'm Grandma, sell me protein water for dogs.”","<b>Secret tricks.</b> Shuffle the pack's 8 tricks and give one to each seller, face down.","<b>Prepare, 60 seconds,</b> all at once. Shy? Write your pitch down and ask someone to read it.","<b>Sell, 20 seconds each.</b> Use your trick, don't say its name.","<b>Buy.</b> The buyer buys the pitch that convinced them: +1 to that seller.","<b>Name the tricks.</b> For each seller in turn, everyone else shows the trick number on three. The seller flips the card and reads the back."],
+ pScore:["<b>Right trick: 1 point</b> for each player who named it.","<b>The seller: 2 points</b> if some named it, but not all. Everyone or nobody: 0.","<b>Bought:</b> 1 point."],
+ pEnd:"Play until everyone has been the buyer once (or three rounds). Most points wins.",
+ houseH:"House rules",house:["What someone says as themselves is their real opinion. Nobody gets told off for it later.","Anyone can say “Pause” if a topic touches something real. Stop and talk. That's the best move in the game."],
+ testH:"For the playtest",test:"Tell us: which rule was confusing? Which card? Did anyone ask to play again? Did a kid name a trick outside the game?",
+ scoreSheet:"Score sheet",player:"Player",total:"Total",albumSheet:"Trick album: tick each trick a player names for the first time",r:"R"},
+es:{trick:"Truco",topic:"Tema",role:"Papel",cit:"Ciudadano",citDo:"Di lo que piensas de verdad sobre el tema. Luego, pilla al Gurú.",citTrick:"Tu carta de truco NO es el truco del Gurú.",guru:"Gurú",guruDo:"Mete tu truco en lo que digas. Sin decir su nombre. Ni muy evidente ni muy escondido.",
+ what:"Qué es",sounds:"Cómo suena",not:"No es lo mismo que",ask:"Pregunta para la mesa",q:"¿Y quién gana si me lo creo?",qBk:"La pregunta",qDo:"Una vez por ronda, en el debate. Quien la coja primero se la hace a quien quiera. Hay que contestar.",
+ prod:"Vende esto",home:"Vende esto (de casa)",buyer:"Compras como",packBk:"Pack de trucos",
  sheet:"Cortad por las líneas grises. Imprimid a doble cara, girando por el borde largo.",front:"cara",back:"dorso",
- sub:"The Guru. Un juego de cartas para la mesa de casa. De 3 a 6 jugadores, desde los 11 años, unos 4 minutos por ronda. Versión de prueba 0.1.",
- idea:"Uno de vosotros es el Gurú en secreto y mete un truco en la conversación. Los demás tienen que pillar quién es y nombrar el truco.",
- setupH:"Preparación",setup:["Poned en fila las cartas de número, del 1 al 5. Barajad los trucos y poned uno debajo de cada número, con el nombre hacia arriba. Leed los cinco en voz alta.","Barajad los temas. Dejad la carta de la pregunta en el centro de la mesa.","Cada uno, una línea en la hoja de puntos."],
- roundH:"Una ronda",round:["<b>El tema.</b> El que va último en puntos roba dos temas, elige uno y lo lee. (Primera ronda: el más joven.) Ese jugador hablará primero.","<b>Los papeles.</b> Coged una carta de Ciudadano por jugador, menos una. Barajad las cinco de Gurú boca abajo y añadid una sin mirarla. Barajad y repartid una a cada uno. Cada uno mira la suya en secreto. La del Gurú lleva un número: ese es el truco que tiene que usar.","<b>Se habla.</b> Por orden, cada uno dice una o dos frases sobre el tema. Los Ciudadanos dicen lo que piensan de verdad. El Gurú mete su truco, sin decir el nombre ni leer la carta. Si sois tres, dad dos vueltas.","<b>La pregunta.</b> Una vez por ronda, el primero que coge la carta de la pregunta se la hace a quien quiera: «¿Y quién gana si me lo creo?». Hay que contestar.","<b>El voto.</b> Contad «tres, dos, uno, ¡pillado!». Todos a la vez: una mano señala al Gurú y la otra marca con los dedos el número del truco. El Gurú disimula y vota también. Quietos.","<b>El destape.</b> El Gurú enseña su papel. Se da la vuelta a la carta del truco, se lee el dorso en voz alta y se contesta su pregunta entre todos.","<b>Siguiente.</b> Apuntad los puntos. El truco usado va al fondo del mazo y entra uno nuevo en su sitio. Leedlo en voz alta."],
- scoreH:"Los puntos",score:["<b>Acertar el truco: 2 puntos</b>, aunque señales a quien no era.","<b>Acertar la persona: 1 punto.</b>","<b>El Gurú: 2 puntos</b> solo si algunos nombran el truco, pero no todos. Demasiado evidente (todos) o demasiado escondido (nadie): 0."],
- endH:"Quién gana",end:"Se juegan cinco rondas (tres si hay prisa). Gana quien tenga más puntos. Si hay empate, quien haya nombrado más trucos.",
- albumH:"El álbum de trucos",album:"La primera vez que nombras un truco, lo marcas en tu álbum. Con los 25, eres Inmune.",
- houseH:"Reglas de la casa",house:["Lo que dice un Ciudadano es su opinión de verdad. Nadie se lo echa en cara después.","Cualquiera puede decir «Pausa» si un tema toca algo real. Se para y se habla. Es la mejor jugada del juego.","El Gurú puede decir cosas que no piensa. Es su trabajo."],
- weekH:"Modo semana (opcional)",week:"El lunes cada uno roba un truco en secreto. Hay que meterlo en una conversación normal durante la semana. Si alguien te pilla y lo nombra, gana 2. Una acusación fallida da 1 punto al acusado. Si lo usaste y nadie te pilló antes de la cena del domingo, cuenta cuándo: ganas 2.",
- testH:"Para la prueba",test:"Contadnos: ¿qué regla lió? ¿Qué carta? ¿Alguien pidió volver a jugar?",
- scoreSheet:"Hoja de puntos",player:"Jugador",total:"Total",albumSheet:"Álbum de trucos: marcad los trucos que ha nombrado cada uno",r:"R"}}[lang];
+ title:"Fool Me Once.",sub:"Dos juegos de cartas sobre los trucos que se usan en redes para venderte y convencerte. Versión de prueba 0.2, 13 de noviembre de 2026.",
+ kit:"En el kit: 6 cartas de papel (1 Gurú y 5 Ciudadanos), 24 cartas de truco en tres packs de 8, 3 cartas de pack, la carta de la pregunta, 40 temas, 32 productos y 12 compradores. Los dos juegos usan las mismas cartas de truco.",
+ gH:"The Guru · de 3 a 6 jugadores · desde 14 años · unos 6 minutos por ronda",
+ gIdea:"Uno mete un truco en la conversación en secreto. Pillad quién y nombrad el truco.",
+ gSet:"Elegid un pack (el 1 la primera vez) y poned su carta en el centro: lleva los 8 trucos con su número. Leedlos en voz alta. Al lado, la carta de la pregunta. Barajad los temas.",
+ gRound:["<b>El tema.</b> El que va último en puntos roba dos temas, elige uno y habla primero. Primera ronda: el más joven.","<b>El reparto.</b> Coged una carta de papel por jugador: el Gurú y el resto Ciudadanos. Barajad y repartid una a cada uno, boca abajo. Barajad los 8 trucos del pack y repartid uno a cada uno, boca abajo. Cada uno mira las dos en secreto. Nadie enseña sus cartas.","<b>Se habla.</b> Por orden, una o dos frases cada uno. Los Ciudadanos dicen lo que piensan de verdad. El Gurú mete su truco sin decir su nombre.","<b>Debate, dos minutos.</b> Se pregunta lo que se quiera. Cada Ciudadano sabe que su carta de truco no es la del Gurú: puede decir cuál tiene, o farolear. El primero que coge la carta de la pregunta se la hace a quien quiera: «¿Y quién gana si me lo creo?». Una vez por ronda.","<b>¿Otra vuelta?</b> Si la mayoría quiere, una frase más cada uno. Una vez por ronda.","<b>El voto.</b> Contad «tres, dos, uno, ¡pillado!». Todos a la vez: una mano señala al Gurú y la otra marca el número del truco. El Gurú disimula y vota también.","<b>El destape.</b> El Gurú da la vuelta a sus dos cartas. Se lee en voz alta el dorso del truco y se contesta su pregunta entre todos."],
+ gScore:["<b>Acertar el truco: 2 puntos</b>, aunque señales a quien no era.","<b>Acertar la persona: 1 punto.</b>","<b>El Gurú: 2 puntos</b> si algunos nombran el truco, pero no todos.","<b>¿No lo ha nombrado nadie?</b> El Gurú dice la frase donde lo metió y la mesa vota con el pulgar. Si estaba: <b>1 punto</b>. Si no: 0.","<b>Si lo nombran todos:</b> demasiado evidente, 0."],
+ gEnd:"Cinco rondas (tres si hay prisa). Gana quien tenga más puntos. Empate: quien haya nombrado más trucos.",
+ pH:"The Pitch · de 3 a 8 jugadores · todas las edades · unos 4 minutos por vendedor",
+ pIdea:"Vende a la mesa algo absurdo con un truco de verdad. Los demás tienen que nombrarlo.",
+ pSet:"Elegid un pack y poned su carta en el centro. Barajad los productos (absurdos, de casa o los dos) y los compradores.",
+ pRound:["<b>El comprador.</b> Un jugador compra esta ronda; va rotando. Se roba un producto y una carta de comprador y se leen: «Soy la abuela, véndeme agua con proteínas para perros».","<b>Trucos secretos.</b> Barajad los 8 trucos del pack y dad uno a cada vendedor, boca abajo.","<b>Preparar, 60 segundos,</b> todos a la vez. ¿Te da corte? Escribe tu anuncio y que lo lea otro.","<b>Vender, 20 segundos cada uno.</b> Usa tu truco sin decir su nombre.","<b>Comprar.</b> El comprador compra el anuncio que le ha convencido: +1 para ese vendedor.","<b>Nombrar los trucos.</b> Por cada vendedor, los demás marcan el número del truco a la de tres. El vendedor da la vuelta a su carta y lee el dorso."],
+ pScore:["<b>Acertar el truco: 1 punto</b> para cada uno que lo nombre.","<b>El vendedor: 2 puntos</b> si lo nombran algunos, pero no todos. Todos o nadie: 0.","<b>Comprado:</b> 1 punto."],
+ pEnd:"Se juega hasta que todos hayan comprado una vez (o tres rondas). Gana quien tenga más puntos.",
+ houseH:"Reglas de la casa",house:["Lo que alguien dice como sí mismo es su opinión de verdad. Nadie se lo echa en cara después.","Cualquiera puede decir «Pausa» si un tema toca algo real. Se para y se habla. Es la mejor jugada del juego."],
+ testH:"Para la prueba",test:"Contadnos: ¿qué regla lió? ¿Qué carta? ¿Alguien pidió volver a jugar? ¿Algún chaval nombró un truco fuera del juego?",
+ scoreSheet:"Hoja de puntos",player:"Jugador",total:"Total",albumSheet:"Álbum de trucos: marcad cada truco la primera vez que lo nombra un jugador",r:"R"}}[lang];
 function e(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-var LOGO='<span class="logo">Fool Me Once. The Guru</span>';
+var LOGO='<span class="logo">Fool Me Once.</span>';
 function bk(label,inv){return '<div class="c mid'+(inv?' inv':'')+'"><span class="bk">Fool Me<br>Once.</span><span class="p">'+label+'</span></div>'}
+function packOf(id){for(var i=0;i<E.packs.length;i++){var j=E.packs[i].ids.indexOf(id);if(j>=0)return {p:i+1,n:j+1}}}
 var cards=[];
-for(var i=0;i<5;i++)cards.push({f:'<div class="c"><span class="k"><span>'+P.role+'</span></span><span class="t" style="margin-top:6mm">'+P.cit+'</span><span class="p" style="font-size:11pt">'+P.citDo+'</span>'+LOGO+'</div>',b:bk(P.role,1)});
-for(var i=1;i<=5;i++)cards.push({f:'<div class="c"><span class="k"><span>'+P.role+'</span></span><span class="t" style="margin-top:6mm">'+P.guru+'</span><span class="p" style="font-size:11pt">'+P.guruIs+'</span><span class="n" style="font-size:54pt">'+i+'</span><span class="p">'+P.guruDo+'</span></div>',b:bk(P.role,1)});
-for(var i=1;i<=5;i++)cards.push({f:'<div class="c mid"><span class="p">'+P.slot+'</span><span class="huge">'+i+'</span></div>',b:'<div class="c mid"><span class="huge">'+i+'</span><span class="p">'+P.slotBk+'</span></div>'});
+cards.push({f:'<div class="c inv"><span class="k"><span>'+P.role+'</span></span><span class="t" style="margin-top:6mm;color:#FFE600">'+P.guru+'</span><span class="p" style="font-size:11pt">'+P.guruDo+'</span>'+LOGO+'</div>',b:bk(P.role,1)});
+for(var i=0;i<5;i++)cards.push({f:'<div class="c"><span class="k"><span>'+P.role+'</span></span><span class="t" style="margin-top:6mm">'+P.cit+'</span><span class="p" style="font-size:11pt">'+P.citDo+'</span><span class="p">'+P.citTrick+'</span>'+LOGO+'</div>',b:bk(P.role,1)});
 cards.push({f:'<div class="c mid inv"><span class="q" style="font-size:20pt">'+P.q+'</span></div>',b:'<div class="c mid"><span class="bk">'+P.qBk+'</span><span class="p">'+P.qDo+'</span></div>'});
-FMO.tricks.forEach(function(t){var x=t[lang],th=FMO.themes[t.theme];
- cards.push({f:'<div class="c"><span class="strip" style="background:'+th.color+'"></span><span class="k"><span>'+P.trick+' '+t.id+'</span><span>'+e(th[lang])+'</span></span><span class="t" style="margin-top:8mm">'+e(x.name)+'</span><span class="s">“'+e(x.says)+'”</span>'+LOGO+'</div>',
- b:'<div class="c"><span class="strip" style="background:'+th.color+'"></span><span class="k"><span>'+P.trick+' '+t.id+'</span><span>'+e(x.name)+'</span></span><div><div class="l">'+P.what+'</div><div class="p">'+e(x.what)+'</div></div><div><div class="l">'+P.where+'</div><div class="p">'+e(x.where)+'</div></div><div class="ask"><div class="l" style="color:#000;font-weight:400">'+P.ask+'</div>'+e(x.ask)+'</div></div>'})});
-FMO.topics.forEach(function(t){var th=FMO.themes[t.theme];
- cards.push({f:'<div class="c"><span class="strip" style="background:'+th.color+'"></span><span class="k"><span>'+P.topic+'</span><span>'+e(th[lang])+'</span></span><span class="q">'+e(t[lang])+'</span>'+LOGO+'</div>',b:bk(P.topic)})});
+E.packs.forEach(function(pk){cards.push({f:'<div class="c"><span class="k"><span>'+e(pk[lang])+'</span></span><ul class="list" style="margin-top:3mm">'+pk.ids.map(function(id,i){return '<li><b>'+(i+1)+'</b>'+e(FMO.tricks[id-1][lang].name)+'</li>'}).join('')+'</ul>'+LOGO+'</div>',b:bk(P.packBk+' '+pk.id)})});
+E.packs.forEach(function(pk){pk.ids.forEach(function(id,i){var t=FMO.tricks[id-1],x=t[lang],m=E.more[id][lang],th=FMO.themes[t.theme];
+ cards.push({f:'<div class="c"><span class="strip" style="background:'+th.color+'"></span><span class="k"><span>Pack '+pk.id+'</span><span>'+e(th[lang])+'</span></span><div style="display:flex;gap:2.5mm;align-items:baseline"><span class="n" style="font-size:22pt">'+(i+1)+'</span><span class="t" style="font-size:13.5pt">'+e(x.name)+'</span></div><div class="sm">'+e(x.what)+'</div><div><div class="l">'+P.sounds+'</div><ul class="ex">'+m.ex.map(function(z){return '<li>“'+e(z)+'”</li>'}).join('')+'</ul></div><div class="not"><b>'+P.not+':</b> '+e(m.not)+'</div><div class="ask"><div class="l" style="color:#000;font-weight:400">'+P.ask+'</div>'+e(x.ask)+'</div></div>',
+ b:bk(P.packBk+' '+pk.id)})})});
+FMO.topics.forEach(function(t){var th=FMO.themes[t.theme];cards.push({f:'<div class="c"><span class="strip" style="background:'+th.color+'"></span><span class="k"><span>'+P.topic+'</span><span>'+e(th[lang])+'</span></span><span class="q">'+e(t[lang])+'</span>'+LOGO+'</div>',b:bk(P.topic)})});
+E.pitch.products.forEach(function(t){cards.push({f:'<div class="c"><span class="strip" style="background:#FF3B30"></span><span class="k"><span>'+P.prod+'</span><span>The Pitch</span></span><span class="q">'+e(t[lang])+'</span>'+LOGO+'</div>',b:bk(P.prod)})});
+E.pitch.home.forEach(function(t){cards.push({f:'<div class="c"><span class="strip" style="background:#FF3B30"></span><span class="k"><span>'+P.home+'</span><span>The Pitch</span></span><span class="q">'+e(t[lang])+'</span>'+LOGO+'</div>',b:bk(P.prod)})});
+E.pitch.buyers.forEach(function(t){cards.push({f:'<div class="c inv"><span class="k"><span>'+P.buyer+'</span><span>The Pitch</span></span><span class="q">'+e(t[lang])+'</span>'+LOGO+'</div>',b:bk(P.buyer)})});
 var h='';
-h+='<div class="page doc"><h1>Fool Me Once.</h1><p>'+P.sub+'</p><p class="box"><b>'+P.idea+'</b></p><div class="cols"><div><h2>'+P.setupH+'</h2><ol>'+P.setup.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol><h2>'+P.roundH+'</h2><ol>'+P.round.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol></div><div><h2>'+P.scoreH+'</h2><ul>'+P.score.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><h2>'+P.endH+'</h2><p>'+P.end+'</p><h2>'+P.albumH+'</h2><p>'+P.album+'</p><h2>'+P.houseH+'</h2><ul>'+P.house.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><h2>'+P.weekH+'</h2><p>'+P.week+'</p><h2>'+P.testH+'</h2><p class="box">'+P.test+'</p></div></div></div>';
-var cols='<th class="x"></th><th class="x"></th><th class="x"></th><th class="x"></th><th class="x"></th><th class="x"></th>';
-h+='<div class="page doc"><h2 style="margin-top:0">'+P.scoreSheet+'</h2><table><tr><th>'+P.player+'</th>'+[1,2,3,4,5].map(function(i){return '<th class="x">'+P.r+i+'</th>'}).join('')+'<th class="x">'+P.total+'</th></tr>'+[1,2,3,4,5,6].map(function(){return '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'}).join('')+'</table><h2>'+P.albumSheet+'</h2><table><tr><th>'+P.trick+'</th>'+cols+'</tr>'+FMO.tricks.map(function(t){return '<tr><td>'+t.id+'. '+e(t[lang].name)+'</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'}).join('')+'</table></div>';
+function ol(a){return '<ol>'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol>'}
+function ul(a){return '<ul>'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
+h+='<div class="page doc"><h1>'+P.title+'</h1><p>'+P.sub+'</p><p>'+P.kit+'</p><h2>'+P.gH+'</h2><p class="box"><b>'+P.gIdea+'</b></p><div class="cols"><div><p>'+P.gSet+'</p>'+ol(P.gRound)+'</div><div>'+ul(P.gScore)+'<p style="margin-top:2mm">'+P.gEnd+'</p><h2>'+P.houseH+'</h2>'+ul(P.house)+'<h2>'+P.testH+'</h2><p class="box">'+P.test+'</p></div></div></div>';
+h+='<div class="page doc"><h2 style="margin-top:0">'+P.pH+'</h2><p class="box"><b>'+P.pIdea+'</b></p><div class="cols"><div><p>'+P.pSet+'</p>'+ol(P.pRound)+'</div><div>'+ul(P.pScore)+'<p style="margin-top:2mm">'+P.pEnd+'</p></div></div>';
+var cols='';for(var i=0;i<8;i++)cols+='<th class="x"></th>';
+h+='<h2>'+P.scoreSheet+'</h2><table><tr><th>'+P.player+'</th>'+[1,2,3,4,5,6,7,8].map(function(i){return '<th class="x">'+P.r+i+'</th>'}).join('')+'<th class="x">'+P.total+'</th></tr>'+[1,2,3,4,5,6,7,8].map(function(){return '<tr><td></td>'+'<td></td>'.repeat(9)+'</tr>'}).join('')+'</table></div>';
+h+='<div class="page doc"><h2 style="margin-top:0">'+P.albumSheet+'</h2><table><tr><th>'+P.trick+'</th>'+cols+'</tr>'+E.packs.flatMap(function(pk){return pk.ids.map(function(id,i){return '<tr><td>Pack '+pk.id+' · '+(i+1)+'. '+e(FMO.tricks[id-1][lang].name)+'</td>'+'<td></td>'.repeat(8)+'</tr>'})}).join('')+'</table></div>';
+var sheets=Math.ceil(cards.length/9);
 for(var s=0;s<cards.length;s+=9){var set=cards.slice(s,s+9),n=s/9+1;
- h+='<div class="page"><div class="foot">Fool Me Once · '+n+'/9 · '+P.front+' · '+P.sheet+'</div><div class="grid">'+set.map(function(c){return c.f}).join('')+'</div></div>';
+ h+='<div class="page"><div class="foot">Fool Me Once · '+n+'/'+sheets+' · '+P.front+' · '+P.sheet+'</div><div class="grid">'+set.map(function(c){return c.f}).join('')+'</div></div>';
  var m=[];for(var r=0;r<3;r++){var row=set.slice(r*3,r*3+3);while(row.length<3)row.push({b:'<div></div>'});m=m.concat(row.reverse())}
- h+='<div class="page"><div class="foot">Fool Me Once · '+n+'/9 · '+P.back+'</div><div class="grid">'+m.map(function(c){return c.b}).join('')+'</div></div>';}
+ h+='<div class="page"><div class="foot">Fool Me Once · '+n+'/'+sheets+' · '+P.back+'</div><div class="grid">'+m.map(function(c){return c.b}).join('')+'</div></div>';}
 document.body.insertAdjacentHTML('beforeend',h);
-// overflow check
-window.OVER=[].filter.call(document.querySelectorAll('.c,.doc'),function(el){return el.scrollHeight>el.clientHeight+1}).map(function(el){return el.textContent.slice(0,40)});
+window.OVER=[].filter.call(document.querySelectorAll('.c,.doc'),function(el){return el.scrollHeight>el.clientHeight+1}).map(function(el){return el.textContent.slice(0,50)});
 </script></body></html>
