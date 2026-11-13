@@ -1,0 +1,5 @@
+const pw=require(process.env.PW);const fs=require('fs');const path=require('path');
+(async()=>{const b=await pw.chromium.launch({executablePath:process.env.EXE});const p=await b.newPage({viewport:{width:1600,height:900}});
+ const sets={A:['en4-01-home','en4-03-players','en4-04-line','en4-05-pick','en4-06-pass','en4-07-hidden'],B:['es6-07-peek-0','es6-07-peek-1','es6-07-peek-2','es6-07-peek-3','es6-07-peek-4','es6-07-peek-5'],C:['en4-08-talk','en4-09-ask','en4-10-vote','en4-11-count','en4-12-still','en4-13-reveal'],D:['es6-14-tally','es6-15-scores-r1','es6-16-newtrick','es6-17-end','es6-18-album','es6-02-how']};
+ for(const k in sets){fs.writeFileSync('shots/_s.html','<body style="margin:0;display:flex;gap:8px;background:#888;align-items:flex-start">'+sets[k].map(n=>'<img style="width:258px" src="'+n+'.png">').join('')+'</body>');await p.goto('file://'+path.resolve('shots/_s.html'));await p.waitForTimeout(400);await p.screenshot({path:'shots/_sheet'+k+'.png',fullPage:true})}
+ await b.close()})();

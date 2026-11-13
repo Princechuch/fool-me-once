@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fool Me Once · The Guru</title>
+<meta name="description" content="A card game for the family table. One of you is the Guru, slipping a trick into the conversation. Catch it and name it.">
+<meta name="theme-color" content="#EEF1F5">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root{--paper:#EEF1F5;--white:#fff;--ink:#141A33;--muted:#56607A;--line:#CDD3DF;--hi:#FFE600;--red:#FF3B30;--ok:#2F9E6E;
+--display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;--body:"Atkinson Hyperlegible","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--paper);color:var(--ink);font:18px/1.45 var(--body);overscroll-behavior:none}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,p{margin:0}
+h1,h2,h3,.disp{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(2.6rem,13vw,4.2rem)}
+h2{font-size:clamp(1.8rem,8vw,2.6rem)}
+h3{font-size:1.25rem}
+#app{min-height:100dvh;max-width:520px;margin:0 auto;display:flex;flex-direction:column;
+ padding:calc(14px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px;margin-bottom:14px}
+.logo{font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:-.01em;background:none;border:0;padding:0}
+.logo i{font-style:normal;color:var(--red)}
+.pill{border:2px solid var(--ink);background:transparent;border-radius:999px;padding:5px 12px;font-weight:700;font-size:.85rem}
+.pill.on{background:var(--ink);color:var(--paper)}
+.round{font-weight:700;font-size:.9rem;color:var(--muted)}
+.screen{flex:1;display:flex;flex-direction:column;gap:18px;animation:in .28s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.grow{flex:1}
+.sub{color:var(--muted);font-size:1.05rem;max-width:34ch}
+.hl{background:linear-gradient(transparent 14%,var(--hi) 14%,var(--hi) 90%,transparent 90%);padding:0 .1em;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:#141A33}
+.paint{background:linear-gradient(var(--hi),var(--hi)) no-repeat 0 62%/0% 78%;padding:0 .1em;box-decoration-break:clone;-webkit-box-decoration-break:clone;animation:paint .7s .45s cubic-bezier(.6,0,.2,1) forwards;color:#141A33}
+@keyframes paint{to{background-size:100% 78%}}
+.btn{display:block;width:100%;border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:16px;padding:17px 20px;font-weight:700;font-size:1.15rem;text-align:center;transition:transform .08s}
+.btn:active{transform:scale(.98)}
+.btn.yellow{background:var(--hi);color:#141A33}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.btn.small{padding:11px 14px;font-size:1rem;border-radius:12px}
+.stack{display:flex;flex-direction:column;gap:10px}
+.rowb{display:flex;gap:10px}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+/* cards */
+.card{position:relative;background:var(--white);border:2px solid var(--ink);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:10px;box-shadow:5px 6px 0 var(--ink)}
+.card .band{height:10px;border-radius:5px;margin-top:auto}
+.card .num{font-family:var(--display);font-weight:800;font-size:1rem;display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);align-self:flex-start;padding:0 8px}
+.card .kind{font-weight:700;font-size:.85rem;color:var(--muted)}
+.card .name{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,8vw,2.3rem);line-height:1.02;letter-spacing:-.02em}
+.card .says{font-style:italic;font-size:1.1rem}
+.card.dark{background:var(--ink);color:var(--paper)}
+.card.dark .kind{color:var(--hi)}
+.card.big{min-height:300px;justify-content:center}
+.card dl{margin:0;display:flex;flex-direction:column;gap:10px}
+.card dt{font-weight:700;font-size:.85rem;color:var(--muted)}
+.card dd{margin:0}
+.card .ask{background:var(--hi);color:#141A33;border-radius:12px;padding:12px 14px;font-weight:700}
+/* flip */
+.flip{perspective:1200px}
+.flip .in{position:relative;transform-style:preserve-3d;animation:flip .7s cubic-bezier(.3,.9,.3,1) both}
+@keyframes flip{from{transform:rotateY(180deg)}to{transform:rotateY(0)}}
+/* hold to peek */
+.peek{position:relative;min-height:340px;border-radius:20px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none}
+.peek .back,.peek .front{position:absolute;inset:0;border-radius:20px;border:2px solid var(--ink);box-shadow:5px 6px 0 var(--ink);display:flex;flex-direction:column;justify-content:center;gap:12px;padding:22px;transition:opacity .12s}
+.peek .back{background:var(--ink);color:var(--paper);align-items:center;text-align:center}
+.peek .back .big{font-family:var(--display);font-weight:800;font-size:2.2rem;line-height:1}
+.peek .back .big span{background:var(--hi);color:#141A33;padding:0 .12em}
+.peek .front{background:var(--white);opacity:0}
+.peek.show .front{opacity:1}.peek.show .back{opacity:0}
+.peek .front.guru{background:var(--hi);color:#141A33}
+/* lineup */
+.line{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.line li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:center;background:var(--white);border:2px solid var(--ink);border-radius:14px;padding:10px 12px}
+.line .n{font-family:var(--display);font-weight:800;font-size:1.2rem;width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center}
+.line b{font-family:var(--display);font-weight:800;font-size:1.12rem;line-height:1.1;display:block}
+.line span{font-style:italic;font-size:.92rem;color:var(--muted);display:block;line-height:1.25}
+.line li.hit{background:var(--hi);color:#141A33}.line li.hit span{color:#141A33}
+.line li.new{animation:pop .5s ease-out}
+@keyframes pop{from{transform:scale(.92);background:var(--hi)}to{transform:none}}
+.topic{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,7vw,2rem);line-height:1.08;letter-spacing:-.02em}
+.tag{display:inline-block;font-weight:700;font-size:.82rem;color:#fff;border-radius:999px;padding:3px 11px;align-self:flex-start}
+.pick{text-align:left;background:var(--white);border:2px solid var(--ink);border-radius:18px;padding:18px;box-shadow:4px 5px 0 var(--ink);display:flex;flex-direction:column;gap:10px}
+.pick:active{transform:translate(2px,2px);box-shadow:2px 3px 0 var(--ink)}
+/* players */
+.names{display:flex;flex-direction:column;gap:8px}
+.names label{display:grid;grid-template-columns:34px minmax(0,1fr) 40px;gap:8px;align-items:center}
+.names .i{font-family:var(--display);font-weight:800;color:var(--muted);text-align:center}
+.names input{font:inherit;font-weight:700;border:2px solid var(--ink);border-radius:12px;padding:12px 14px;background:var(--white);color:var(--ink);width:100%;min-width:0}
+.names .x{border:0;background:none;font-size:1.4rem;color:var(--muted);height:40px}
+.seg{display:flex;border:2px solid var(--ink);border-radius:12px;overflow:hidden}
+.seg button{flex:1;border:0;background:transparent;padding:10px;font-weight:700}
+.seg button.on{background:var(--ink);color:var(--paper)}
+/* countdown */
+.count{flex:1;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:38vw;line-height:1}
+@media(min-width:520px){.count{font-size:200px}}
+.count span{animation:beat .9s ease-out both}
+@keyframes beat{0%{transform:scale(1.6);opacity:0}25%{transform:scale(1);opacity:1}100%{opacity:1}}
+.fool{background:var(--hi);color:#141A33;padding:0 .12em;font-size:.55em}
+/* tally */
+.tally{display:flex;flex-direction:column;gap:8px}
+.trow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;background:var(--white);border:2px solid var(--ink);border-radius:14px;padding:8px 8px 8px 14px}
+.trow b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tog{border:2px solid var(--ink);background:transparent;border-radius:10px;padding:9px 10px;font-weight:700;font-size:.88rem;min-width:74px}
+.tog.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.scores{display:flex;flex-direction:column;gap:8px}
+.srow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:baseline;border-bottom:2px solid var(--line);padding:8px 2px}
+.srow b{font-family:var(--display);font-size:1.25rem}
+.srow .d{font-weight:700;color:var(--ok)}
+.srow .t{font-family:var(--display);font-weight:800;font-size:1.6rem;min-width:2ch;text-align:right}
+.srow.lead b{background:linear-gradient(transparent 14%,var(--hi) 14%,var(--hi) 90%,transparent 90%);color:#141A33;padding:0 .1em;justify-self:start}
+.verdict{border-radius:16px;padding:14px 16px;background:var(--ink);color:var(--paper)}
+.verdict b{font-family:var(--display);font-size:1.3rem;display:block}
+.stamp{align-self:flex-start;font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--red);border:4px solid var(--red);border-radius:10px;padding:2px 12px;transform:rotate(-6deg);animation:stamp .35s .9s cubic-bezier(.2,2,.4,1) both}
+@keyframes stamp{from{transform:rotate(-6deg) scale(2.4);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
+/* album */
+.album{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.album div{aspect-ratio:1;border:2px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;color:var(--line)}
+.album div.got{background:var(--hi);border-color:var(--ink);color:#141A33}
+.rules{display:flex;flex-direction:column;gap:14px;counter-reset:r;list-style:none;padding:0;margin:0}
+.rules li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;counter-increment:r}
+.rules li::before{content:counter(r);font-family:var(--display);font-weight:800;font-size:1.2rem;width:40px;height:40px;border-radius:50%;background:var(--hi);color:#141A33;display:flex;align-items:center;justify-content:center;border:2px solid var(--ink)}
+.rules b{font-family:var(--display);font-size:1.15rem;display:block}
+.note{background:var(--white);border:2px dashed var(--ink);border-radius:14px;padding:12px 14px;font-size:.98rem}
+.hero-cards{position:relative;height:210px;margin:6px 0}
+.hero-cards .card{position:absolute;width:31%;height:190px;padding:12px;gap:6px;box-shadow:3px 4px 0 var(--ink);border-radius:16px}
+.hero-cards .card .name{font-size:clamp(.95rem,4.6vw,1.25rem)}
+.hero-cards .card .num{min-width:28px;height:28px;font-size:.9rem}
+.hero-cards .a{left:0;top:12px;transform:rotate(-6deg)}
+.hero-cards .b{left:34.5%;top:0;z-index:2;animation:wig 5s 1.2s ease-in-out infinite}
+.hero-cards .c{right:0;top:12px;transform:rotate(6deg)}
+@keyframes wig{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-3deg)}94%{transform:rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="cards.js"></script>
+<script>
+(function(){
+var T={en:{
+ tag:"The Guru. A card game for the family table.",
+ h1a:"Someone at this table is ",h1b:"fooling you.",
+ lede:"One of you is secretly the Guru, slipping a trick into the conversation. Catch who. Name the trick.",
+ play:"Play",how:"How to play",album:"Trick album",resume:"Continue the game",
+ facts:"3 to 6 players. One phone on the table. About 4 minutes a round.",
+ who:"Who's playing?",whoSub:"3 to 6 players. Use the names you call each other.",add:"Add a player",name:"Name",rounds:"Rounds",quick:"3, quick",full:"5, full game",start:"Deal the tricks",
+ lineH:"Tonight's five tricks",lineSub:"Read them out loud. The Guru will use one of these. Remember the numbers.",ready:"We've read them",
+ pickH:function(n){return n+", pick the topic"},pickSub:"You have the fewest points, so you choose. You'll also speak first.",pickSub1:"You choose, and you'll speak first.",
+ passTo:"Pass the phone to",iam:function(n){return "I'm "+n},
+ holdA:"Hold to",holdB:"peek",holdSub:"Keep it hidden. Let go to hide it again.",
+ cit:"Citizen",citDo:"Say what you really think about the topic. Then catch the Guru.",
+ guru:"You're the Guru",guruDo:"Slip this trick into what you say. Don't say its name. Not too obvious, not too hidden.",trickN:function(n){return "Trick "+n},
+ hide:"Hidden. Next player",allSeen:"Everyone knows their role",
+ talkH:"Topic",order:"Speaking order",talkDo:"One or two sentences each. Citizens say what they really think.",talk3:"With three players, go round twice.",
+ qBtn:"Ask the question (once per round)",qUsed:"The question has been asked",qBig:"Who wins if I believe this?",qSub:"Anyone can ask it, to anyone, once. They have to answer.",qOk:"Asked",
+ vote:"Everyone has spoken. Vote",
+ voteH:"Get your hands ready",voteDo1:"One hand points at the Guru.",voteDo2:"The other shows the trick number, 1 to 5.",voteDo3:"The Guru bluffs along.",count:"Count us in",fool:"Fool!",
+ holdStill:"Hold still!",holdStillSub:"Hands where everyone can see them.",reveal:"Reveal the Guru",
+ wasGuru:function(n){return n+" was the Guru"},caught:"Caught",what:"What it is",where:"Where you see it",ask:"Ask the table",
+ tallyH:"Who got it right?",tallySub:function(n){return "Tap what each player got. "+n+" doesn't vote."},gotG:"Guru",gotT:"Trick",score:"Score the round",
+ gSome:"Perfectly sneaky",gSomeS:function(n){return n+" scores 2: some named the trick, not all."},
+ gAll:"Too obvious",gAllS:function(n){return "Everyone named the trick. "+n+" scores 0."},
+ gNone:"Too well hidden",gNoneS:function(n){return "Nobody named the trick. "+n+" scores 0."},
+ scoresH:"Scores",roundN:function(a,b){return "Round "+a+" of "+b},next:"Next round",newTrick:"A new trick joins the table",finish:"See who won",
+ winH:function(n){return n+" wins"},tieH:function(n){return n+" share the win"},
+ hard:"Hardest to fool",smooth:"Smoothest Guru",again:"Play again, same players",home:"Back to start",
+ albumH:"Trick album",albumSub:"Every trick you name goes in your album. Collect all 25 and you're Immune.",albumEmpty:"No tricks yet. Play a round and name one.",immune:"Immune",of:"of 25",clear:"Clear albums",
+ howH:"How to play",
+ r:[["Five tricks on the table","Read them out loud. Each one is a real trick used to sell or persuade online."],["Pick a topic","Whoever has the fewest points chooses between two, and speaks first."],["Peek at your role","Pass the phone round. Everyone is a Citizen except one: the Guru, who gets one of the five tricks."],["Talk","One or two sentences each. Citizens say what they really think. The Guru slips the trick in."],["Ask the question","Once per round, anyone can ask anyone: “Who wins if I believe this?”"],["Three, two, one, fool!","All at once: one hand points at the Guru, the other shows the trick number."],["Reveal","Read the trick card and answer its question together."]],
+ scH:"Scoring",sc:["Right trick: 2 points, even if you pointed at the wrong person.","Right person: 1 point.","The Guru scores 2 only if some players name the trick, but not all. Too obvious or too hidden scores 0."],
+ fair:"House rules",fairs:["What a Citizen says is their real opinion. Nobody gets told off for it later.","Anyone can say “Pause” if a topic touches something real. Stop and talk. That's the best move in the game."],
+ back:"Back"},
+es:{
+ tag:"The Guru. Un juego de cartas para la mesa de casa.",
+ h1a:"Alguien en esta mesa ",h1b:"te la está colando.",
+ lede:"Uno de vosotros es el Gurú en secreto y mete un truco en la conversación. Pillad quién. Nombrad el truco.",
+ play:"Jugar",how:"Cómo se juega",album:"Álbum de trucos",resume:"Seguir la partida",
+ facts:"De 3 a 6 jugadores. Un móvil en la mesa. Unos 4 minutos por ronda.",
+ who:"¿Quién juega?",whoSub:"De 3 a 6 jugadores. Poned los nombres con los que os llamáis.",add:"Añadir jugador",name:"Nombre",rounds:"Rondas",quick:"3, rápida",full:"5, partida entera",start:"Repartir los trucos",
+ lineH:"Los cinco trucos de hoy",lineSub:"Leedlos en voz alta. El Gurú va a usar uno de estos. Acordaos de los números.",ready:"Ya los hemos leído",
+ pickH:function(n){return n+", elige el tema"},pickSub:"Vas último en puntos, así que eliges tú. También hablas primero.",pickSub1:"Eliges tú, y hablas primero.",
+ passTo:"Pásale el móvil a",iam:function(n){return "Soy "+n},
+ holdA:"Mantén pulsado para",holdB:"mirar",holdSub:"Que no lo vea nadie. Suelta para esconderlo.",
+ cit:"Ciudadano",citDo:"Di lo que piensas de verdad sobre el tema. Luego, pilla al Gurú.",
+ guru:"Eres el Gurú",guruDo:"Mete este truco en lo que digas. Sin decir su nombre. Ni muy evidente ni muy escondido.",trickN:function(n){return "Truco "+n},
+ hide:"Escondido. Siguiente jugador",allSeen:"Todos saben su papel",
+ talkH:"Tema",order:"Orden para hablar",talkDo:"Una o dos frases cada uno. Los Ciudadanos dicen lo que piensan de verdad.",talk3:"Si sois tres, dad dos vueltas.",
+ qBtn:"Hacer la pregunta (una vez por ronda)",qUsed:"La pregunta ya está hecha",qBig:"¿Y quién gana si me lo creo?",qSub:"Cualquiera se la puede hacer a cualquiera, una vez. Hay que contestar.",qOk:"Hecha",
+ vote:"Ya han hablado todos. A votar",
+ voteH:"Preparad las manos",voteDo1:"Con una mano señaláis al Gurú.",voteDo2:"Con la otra, el número del truco, del 1 al 5.",voteDo3:"El Gurú disimula y vota también.",count:"Cuenta atrás",fool:"¡Pillado!",
+ holdStill:"¡Quietos!",holdStillSub:"Las manos donde se vean.",reveal:"Destapar al Gurú",
+ wasGuru:function(n){return "El Gurú era "+n},caught:"Pillado",what:"Qué es",where:"Dónde lo ves",ask:"Pregunta para la mesa",
+ tallyH:"¿Quién ha acertado?",tallySub:function(n){return "Marcad lo que acertó cada uno. "+n+" no vota."},gotG:"Gurú",gotT:"Truco",score:"Puntuar la ronda",
+ gSome:"Fino, fino",gSomeS:function(n){return n+" gana 2: algunos nombraron el truco, pero no todos."},
+ gAll:"Demasiado evidente",gAllS:function(n){return "Todos nombraron el truco. "+n+" se queda en 0."},
+ gNone:"Demasiado escondido",gNoneS:function(n){return "Nadie nombró el truco. "+n+" se queda en 0."},
+ scoresH:"Puntos",roundN:function(a,b){return "Ronda "+a+" de "+b},next:"Siguiente ronda",newTrick:"Entra un truco nuevo a la mesa",finish:"Ver quién ha ganado",
+ winH:function(n){return "Gana "+n},tieH:function(n){return "Empate: "+n},
+ hard:"A quien menos se la cuelan",smooth:"El Gurú más fino",again:"Otra partida, los mismos",home:"Volver al inicio",
+ albumH:"Álbum de trucos",albumSub:"Cada truco que nombras va a tu álbum. Con los 25, eres Inmune.",albumEmpty:"Aún no hay trucos. Jugad una ronda y nombrad uno.",immune:"Inmune",of:"de 25",clear:"Vaciar álbumes",
+ howH:"Cómo se juega",
+ r:[["Cinco trucos en la mesa","Se leen en voz alta. Cada uno es un truco de verdad que se usa para vender o convencer en redes."],["Se elige un tema","El que va último en puntos elige entre dos, y habla primero."],["Cada uno mira su papel","Se pasa el móvil. Todos son Ciudadanos menos uno: el Gurú, que recibe uno de los cinco trucos."],["Se habla","Una o dos frases cada uno. Los Ciudadanos dicen lo que piensan de verdad. El Gurú mete su truco."],["La pregunta","Una vez por ronda, cualquiera puede preguntarle a cualquiera: «¿Y quién gana si me lo creo?»"],["Tres, dos, uno, ¡pillado!","Todos a la vez: una mano señala al Gurú y la otra marca el número del truco."],["El destape","Se lee la carta del truco y se contesta su pregunta entre todos."]],
+ scH:"Los puntos",sc:["Acertar el truco: 2 puntos, aunque señales a quien no era.","Acertar la persona: 1 punto.","El Gurú gana 2 solo si algunos nombran el truco, pero no todos. Ni muy evidente ni muy escondido: si no, 0."],
+ fair:"Reglas de la casa",fairs:["Lo que dice un Ciudadano es su opinión de verdad. Nadie se lo echa en cara después.","Cualquiera puede decir «Pausa» si un tema toca algo real. Se para y se habla. Es la mejor jugada del juego."],
+ back:"Volver"}};
+
+var app=document.getElementById('app'),S=load()||fresh(),L=T[S.lang];
+function fresh(){return {lang:(navigator.language||'en').slice(0,2)==='es'?'es':'en',scr:'home',names:['','',''],rounds:5,game:null}}
+function load(){try{var s=JSON.parse(localStorage.getItem('fmo_state'));if(s&&s.scr&&s.names)return s}catch(e){}return null}
+function save(){try{localStorage.setItem('fmo_state',JSON.stringify(S))}catch(e){}}
+function albums(){try{return JSON.parse(localStorage.getItem('fmo_album'))||{}}catch(e){return {}}}
+function saveAlbums(a){try{localStorage.setItem('fmo_album',JSON.stringify(a))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function trick(id){return FMO.tricks[id-1]}
+function tx(t){return t[S.lang]}
+function th(k){return FMO.themes[k]}
+
+function newGame(){
+ var n=S.names.map(function(x){return x.trim()}).filter(Boolean);
+ var deck=shuf(FMO.tricks.map(function(t){return t.id}));
+ S.game={players:n,scores:n.map(function(){return 0}),guruPts:n.map(function(){return 0}),named:n.map(function(){return 0}),guruTimes:n.map(function(){return 0}),
+  line:deck.splice(0,5),deck:deck,topics:shuf(FMO.topics.map(function(_,i){return i})),round:0,total:S.rounds,r:null,fresh:-1};
+ S.scr='line';
+}
+function startRound(){
+ var g=S.game;g.round++;
+ var min=Math.min.apply(null,g.scores),low=[];g.scores.forEach(function(s,i){if(s===min)low.push(i)});
+ var chooser=low[Math.floor(Math.random()*low.length)];
+ if(g.topics.length<2)g.topics=shuf(FMO.topics.map(function(_,i){return i}));
+ var w=g.guruTimes.map(function(t){return 1/(1+5*t)}),sum=w.reduce(function(a,b){return a+b},0),x=Math.random()*sum,guru=0;
+ for(var i=0;i<w.length;i++){x-=w[i];if(x<=0){guru=i;break}}
+ g.r={chooser:chooser,opts:[g.topics.pop(),g.topics.pop()],topic:null,guru:guru,slot:Math.floor(Math.random()*5),seen:0,peeked:false,asked:false,got:{},delta:null};
+ S.scr='pick';
+}
+function order(){var g=S.game,o=[];for(var i=0;i<g.players.length;i++)o.push((g.r.chooser+i)%g.players.length);return o}
+function scoreRound(){
+ var g=S.game,r=g.r,d=g.players.map(function(){return 0}),al=albums(),tid=g.line[r.slot],n=0,voters=g.players.length-1;
+ g.players.forEach(function(p,i){if(i===r.guru)return;var v=r.got[i]||{};
+  if(v.t){d[i]+=2;n++;g.named[i]++;var k=p.toLowerCase();al[k]=al[k]||{name:p,ids:[]};if(al[k].ids.indexOf(tid)<0)al[k].ids.push(tid)}
+  if(v.g)d[i]+=1});
+ r.verdict=n===0?'none':n===voters?'all':'some';
+ if(r.verdict==='some'){d[r.guru]+=2;g.guruPts[r.guru]+=2}
+ g.guruTimes[r.guru]++;r.delta=d;d.forEach(function(x,i){g.scores[i]+=x});saveAlbums(al);S.scr='scores';
+}
+function afterScores(){
+ var g=S.game;
+ if(g.round>=g.total){S.scr='end';return}
+ var used=g.line[g.r.slot];g.deck.push(used);g.line[g.r.slot]=g.deck.shift();g.fresh=g.r.slot;S.scr='line';
+}
+
+function top(){var g=S.game,mid=(g&&S.scr!=='home'&&S.scr!=='players'&&S.scr!=='how'&&S.scr!=='album'&&g.round>0)?'<span class="round">'+L.roundN(g.round,g.total)+'</span>':'';
+ return '<div class="top"><button class="logo" data-a="home">Fool Me <span class="hl">Once</span><i>.</i></button>'+mid+'<button class="pill" data-a="lang" aria-label="Language">'+(S.lang==='en'?'ES':'EN')+'</button></div>'}
+function lineHTML(hit,fresh){var g=S.game;return '<ol class="line">'+g.line.map(function(id,i){var t=tx(trick(id));return '<li class="'+(i===hit?'hit ':'')+(i===fresh?'new':'')+'"><span class="n">'+(i+1)+'</span><div><b>'+esc(t.name)+'</b><span>“'+esc(t.says)+'”</span></div></li>'}).join('')+'</ol>'}
+function tag(k){return '<span class="tag" style="background:'+th(k).color+'">'+esc(th(k)[S.lang])+'</span>'}
+
+var V={
+home:function(){var g=S.game,live=g&&g.round>0&&g.round<=g.total&&S.last&&S.last!=='end';
+ var a=tx(trick(3)),b=tx(trick(18));
+ return '<h1>'+L.h1a+'<span class="hl">'+L.h1b+'</span></h1><p class="sub">'+L.lede+'</p>'+
+ '<div class="hero-cards" aria-hidden="true"><div class="card a"><span class="num">3</span><span class="name">'+esc(a.name)+'</span><span class="band" style="background:'+th('money').color+'"></span></div>'+
+ '<div class="card c"><span class="num">18</span><span class="name">'+esc(b.name)+'</span><span class="band" style="background:'+th('body').color+'"></span></div>'+
+ '<div class="card dark b"><span class="kind">'+L.guru+'</span><span class="name">'+esc(tx(trick(1)).name)+'</span><span class="band" style="background:var(--hi)"></span></div></div>'+
+ '<div class="grow"></div><p class="sub" style="font-size:.95rem">'+L.facts+'</p><div class="stack">'+
+ (live?'<button class="btn yellow" data-a="resume">'+L.resume+'</button>':'')+
+ '<button class="btn'+(live?' ghost':' yellow')+'" data-a="players">'+L.play+'</button><div class="rowb"><button class="btn ghost small" data-a="how">'+L.how+'</button><button class="btn ghost small" data-a="album">'+L.album+'</button></div></div>'},
+players:function(){var ok=S.names.filter(function(x){return x.trim()}).length>=3;
+ return '<h2>'+L.who+'</h2><p class="sub">'+L.whoSub+'</p><div class="names">'+S.names.map(function(n,i){return '<label><span class="i">'+(i+1)+'</span><input data-i="'+i+'" value="'+esc(n)+'" placeholder="'+L.name+'" maxlength="14" autocomplete="off" autocapitalize="words" enterkeyhint="next">'+(S.names.length>3?'<button class="x" data-a="del" data-i="'+i+'" aria-label="Remove">×</button>':'<span></span>')+'</label>'}).join('')+'</div>'+
+ (S.names.length<6?'<button class="btn ghost small" data-a="add">'+L.add+'</button>':'')+
+ '<div><p style="font-weight:700;margin-bottom:6px">'+L.rounds+'</p><div class="seg"><button data-a="r3" class="'+(S.rounds===3?'on':'')+'">'+L.quick+'</button><button data-a="r5" class="'+(S.rounds===5?'on':'')+'">'+L.full+'</button></div></div>'+
+ '<div class="grow"></div><button class="btn yellow" id="go" data-a="start" '+(ok?'':'disabled')+'>'+L.start+'</button>'},
+line:function(){var g=S.game,f=g.fresh;
+ return '<h2>'+(f>=0?L.newTrick:L.lineH)+'</h2><p class="sub">'+L.lineSub+'</p>'+lineHTML(-1,f)+'<div class="grow"></div><button class="btn yellow" data-a="round">'+L.ready+'</button>'},
+pick:function(){var g=S.game,r=g.r;
+ return '<h2>'+esc(L.pickH(g.players[r.chooser]))+'</h2><p class="sub">'+(g.round===1?L.pickSub1:L.pickSub)+'</p>'+r.opts.map(function(ti,i){var t=FMO.topics[ti];return '<button class="pick" data-a="topic" data-i="'+i+'">'+tag(t.theme)+'<span class="topic">'+esc(t[S.lang])+'</span></button>'}).join('')},
+pass:function(){var g=S.game,r=g.r,p=order()[r.seen];
+ return '<div class="grow"></div><p class="sub">'+L.passTo+'</p><h1>'+esc(g.players[p])+'</h1><div class="grow"></div><button class="btn" data-a="iam">'+esc(L.iam(g.players[p]))+'</button>'},
+peek:function(){var g=S.game,r=g.r,p=order()[r.seen],isG=p===r.guru,t=tx(trick(g.line[r.slot])),last=r.seen===g.players.length-1;
+ var front=isG?'<div class="front guru"><span class="kind" style="font-weight:700">'+L.guru+'</span><span class="num" style="font-family:var(--display);font-weight:800;font-size:1.1rem">'+L.trickN(r.slot+1)+'</span><span class="disp" style="font-size:2rem">'+esc(t.name)+'</span><span style="font-style:italic">“'+esc(t.says)+'”</span><span style="font-size:.95rem">'+L.guruDo+'</span></div>'
+  :'<div class="front"><span class="disp" style="font-size:2.4rem">'+L.cit+'</span><span>'+L.citDo+'</span></div>';
+ return '<h3>'+esc(g.players[p])+'</h3><div class="peek" id="peek"><div class="back"><span class="big">'+L.holdA+'<br><span>'+L.holdB+'</span></span><span style="opacity:.8;font-size:.95rem">'+L.holdSub+'</span></div>'+front+'</div><div class="grow"></div><button class="btn" id="hid" data-a="seen" '+(r.peeked?'':'disabled')+'>'+(last?L.allSeen:L.hide)+'</button>'},
+talk:function(){var g=S.game,r=g.r,t=FMO.topics[r.topic];
+ return '<div class="stack" style="gap:8px">'+tag(t.theme)+'<p class="topic">'+esc(t[S.lang])+'</p></div>'+
+ '<p class="sub" style="font-size:.98rem"><b style="color:var(--ink)">'+L.order+':</b> '+order().map(function(i){return esc(g.players[i])}).join(', ')+'. '+L.talkDo+(g.players.length===3?' '+L.talk3:'')+'</p>'+lineHTML(-1,-1)+
+ '<div class="grow"></div><div class="stack"><button class="btn ghost small" data-a="ask" '+(r.asked?'disabled':'')+'>'+(r.asked?L.qUsed:L.qBtn)+'</button><button class="btn yellow" data-a="vote">'+L.vote+'</button></div>'},
+ask:function(){return '<div class="grow"></div><h1><span class="paint">'+L.qBig+'</span></h1><p class="sub">'+L.qSub+'</p><div class="grow"></div><button class="btn" data-a="asked">'+L.qOk+'</button>'},
+vote:function(){return '<h2>'+L.voteH+'</h2><ol class="rules"><li><div><b>'+L.voteDo1+'</b></div></li><li><div><b>'+L.voteDo2+'</b></div></li></ol><p class="sub">'+L.voteDo3+'</p>'+lineHTML(-1,-1)+'<div class="grow"></div><button class="btn yellow" data-a="count">'+L.count+'</button>'},
+count:function(){return '<div class="count" id="cnt" aria-live="assertive"><span>3</span></div>'},
+still:function(){return '<div class="grow"></div><h1>'+L.holdStill+'</h1><p class="sub">'+L.holdStillSub+'</p><div class="grow"></div><button class="btn yellow" data-a="reveal">'+L.reveal+'</button>'},
+reveal:function(){var g=S.game,r=g.r,tr=trick(g.line[r.slot]),t=tx(tr);
+ return '<h2>'+esc(L.wasGuru(g.players[r.guru]))+'</h2><div class="flip"><div class="in"><div class="card"><span class="stamp">'+L.caught+'</span><span class="kind">'+L.trickN(r.slot+1)+'</span><span class="name"><span class="paint">'+esc(t.name)+'</span></span><span class="says">“'+esc(t.says)+'”</span>'+
+ '<dl><div><dt>'+L.what+'</dt><dd>'+esc(t.what)+'</dd></div><div><dt>'+L.where+'</dt><dd>'+esc(t.where)+'</dd></div></dl><div class="ask"><span style="font-size:.85rem;display:block;font-weight:400">'+L.ask+'</span>'+esc(t.ask)+'</div><span class="band" style="background:'+th(tr.theme).color+'"></span></div></div></div>'+
+ '<div class="grow"></div><button class="btn" data-a="tally">'+L.tallyH+'</button>'},
+tally:function(){var g=S.game,r=g.r;
+ return '<h2>'+L.tallyH+'</h2><p class="sub">'+esc(L.tallySub(g.players[r.guru]))+'</p><div class="tally">'+g.players.map(function(p,i){if(i===r.guru)return '';var v=r.got[i]||{};
+  return '<div class="trow"><b>'+esc(p)+'</b><button class="tog '+(v.g?'on':'')+'" data-a="tg" data-i="'+i+'" aria-pressed="'+!!v.g+'">'+L.gotG+' +1</button><button class="tog '+(v.t?'on':'')+'" data-a="tt" data-i="'+i+'" aria-pressed="'+!!v.t+'">'+L.gotT+' +2</button></div>'}).join('')+'</div><div class="grow"></div><button class="btn yellow" data-a="score">'+L.score+'</button>'},
+scores:function(){var g=S.game,r=g.r,gn=g.players[r.guru],v=r.verdict,max=Math.max.apply(null,g.scores);
+ var idx=g.players.map(function(_,i){return i}).sort(function(a,b){return g.scores[b]-g.scores[a]});
+ return '<div class="verdict"><b>'+(v==='some'?L.gSome:v==='all'?L.gAll:L.gNone)+'</b>'+esc((v==='some'?L.gSomeS:v==='all'?L.gAllS:L.gNoneS)(gn))+'</div><h2>'+L.scoresH+'</h2><div class="scores">'+idx.map(function(i){
+  return '<div class="srow '+(g.scores[i]===max&&max>0?'lead':'')+'"><b>'+esc(g.players[i])+'</b><span class="d">'+(r.delta[i]?'+'+r.delta[i]:'')+'</span><span class="t">'+g.scores[i]+'</span></div>'}).join('')+'</div><div class="grow"></div><button class="btn yellow" data-a="after">'+(g.round>=g.total?L.finish:L.next)+'</button>'},
+end:function(){var g=S.game,max=Math.max.apply(null,g.scores),w=g.players.filter(function(_,i){return g.scores[i]===max});
+ function best(arr){var m=Math.max.apply(null,arr);return m>0?g.players.filter(function(_,i){return arr[i]===m}).join(', '):null}
+ var hard=best(g.named),sm=best(g.guruPts),idx=g.players.map(function(_,i){return i}).sort(function(a,b){return g.scores[b]-g.scores[a]});
+ return '<h1><span class="paint">'+esc(w.length>1?L.tieH(w.join(', ')):L.winH(w[0]))+'</span></h1><div class="scores">'+idx.map(function(i){return '<div class="srow"><b>'+esc(g.players[i])+'</b><span></span><span class="t">'+g.scores[i]+'</span></div>'}).join('')+'</div>'+
+ (hard?'<div class="note"><b>'+L.hard+':</b> '+esc(hard)+'</div>':'')+(sm?'<div class="note"><b>'+L.smooth+':</b> '+esc(sm)+'</div>':'')+
+ '<div class="grow"></div><div class="stack"><button class="btn yellow" data-a="again">'+L.again+'</button><div class="rowb"><button class="btn ghost small" data-a="album">'+L.album+'</button><button class="btn ghost small" data-a="home">'+L.home+'</button></div></div>'},
+album:function(){var al=albums(),ks=Object.keys(al);
+ return '<h2>'+L.albumH+'</h2><p class="sub">'+L.albumSub+'</p>'+(ks.length?ks.map(function(k){var a=al[k];return '<div class="stack"><h3>'+esc(a.name)+' <span style="color:var(--muted);font-family:var(--body);font-weight:400;font-size:1rem">'+(a.ids.length>=25?L.immune:a.ids.length+' '+L.of)+'</span></h3><div class="album">'+FMO.tricks.map(function(t){var got=a.ids.indexOf(t.id)>=0;return '<div class="'+(got?'got':'')+'" title="'+(got?esc(tx(t).name):'')+'">'+t.id+'</div>'}).join('')+'</div></div>'}).join(''):'<div class="note">'+L.albumEmpty+'</div>')+
+ '<div class="grow"></div><div class="stack"><button class="btn" data-a="back">'+L.back+'</button>'+(ks.length?'<button class="btn ghost small" data-a="clear">'+L.clear+'</button>':'')+'</div>'},
+how:function(){return '<h2>'+L.howH+'</h2><ol class="rules">'+L.r.map(function(x){return '<li><div><b>'+x[0]+'</b>'+x[1]+'</div></li>'}).join('')+'</ol><h3>'+L.scH+'</h3><div class="stack">'+L.sc.map(function(x){return '<div class="note">'+x+'</div>'}).join('')+'</div><h3>'+L.fair+'</h3><div class="stack">'+L.fairs.map(function(x){return '<p>'+x+'</p>'}).join('')+'</div><button class="btn" data-a="back">'+L.back+'</button>'}
+};
+
+var timer=null;
+function go(s){if(S.scr!=='how'&&S.scr!=='album'&&S.scr!=='home')S.last=S.scr;S.scr=s;render()}
+function render(){L=T[S.lang];document.documentElement.lang=S.lang;clearTimeout(timer);
+ app.innerHTML=top()+'<main class="screen">'+V[S.scr]()+'</main>';save();window.scrollTo(0,0);
+ if(S.scr==='peek')bindPeek();if(S.scr==='count')runCount();}
+function bindPeek(){var el=document.getElementById('peek'),btn=document.getElementById('hid');
+ function on(e){e.preventDefault();el.classList.add('show');S.game.r.peeked=true}
+ function off(){el.classList.remove('show');if(S.game.r.peeked)btn.disabled=false}
+ el.addEventListener('pointerdown',on);['pointerup','pointercancel','pointerleave'].forEach(function(n){el.addEventListener(n,off)});
+ el.addEventListener('contextmenu',function(e){e.preventDefault()});}
+function runCount(){var el=document.getElementById('cnt'),seq=['3','2','1','<span class="fool">'+L.fool+'</span>'],i=0;
+ (function step(){el.innerHTML='<span>'+seq[i]+'</span>';if(navigator.vibrate)try{navigator.vibrate(i===3?200:40)}catch(e){}
+  i++;timer=setTimeout(i<4?step:function(){S.scr='still';render()},i<4?900:1300)})();}
+
+app.addEventListener('input',function(e){var i=e.target.dataset.i;if(i===undefined)return;S.names[+i]=e.target.value;save();
+ var go=document.getElementById('go');if(go)go.disabled=S.names.filter(function(x){return x.trim()}).length<3});
+app.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!b)return;var a=b.dataset.a,i=+b.dataset.i,g=S.game,r=g&&g.r;
+ switch(a){
+ case 'lang':S.lang=S.lang==='en'?'es':'en';render();break;
+ case 'home':go('home');break;
+ case 'resume':S.scr=S.last;render();break;
+ case 'players':go('players');break;
+ case 'how':case 'album':S.prev=S.scr;go(a);break;
+ case 'back':S.scr=S.prev||'home';render();break;
+ case 'clear':saveAlbums({});render();break;
+ case 'add':S.names.push('');render();var ins=app.querySelectorAll('input');ins[ins.length-1].focus();break;
+ case 'del':S.names.splice(i,1);render();break;
+ case 'r3':S.rounds=3;render();break;case 'r5':S.rounds=5;render();break;
+ case 'start':newGame();render();break;
+ case 'again':newGame();render();break;
+ case 'round':g.fresh=-1;startRound();render();break;
+ case 'topic':r.topic=r.opts[i];go('pass');break;
+ case 'iam':r.peeked=false;go('peek');break;
+ case 'seen':r.seen++;r.peeked=false;go(r.seen>=g.players.length?'talk':'pass');break;
+ case 'ask':go('ask');break;
+ case 'asked':r.asked=true;go('talk');break;
+ case 'vote':go('vote');break;
+ case 'count':go('count');break;
+ case 'reveal':go('reveal');break;
+ case 'tally':go('tally');break;
+ case 'tg':case 'tt':r.got[i]=r.got[i]||{};var k=a==='tg'?'g':'t';r.got[i][k]=!r.got[i][k];b.classList.toggle('on',r.got[i][k]);b.setAttribute('aria-pressed',r.got[i][k]);save();break;
+ case 'score':scoreRound();render();break;
+ case 'after':afterScores();render();break;
+ }});
+if(S.scr==='count')S.scr='vote';
+render();
+})();
+</script>
+</body>
+</html>
