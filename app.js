@@ -138,7 +138,7 @@ function startRound(){
   var min=Math.min.apply(null,g.scores),low=[];g.scores.forEach(function(s,i){if(s===min)low.push(i)});
   var chooser=low[Math.floor(Math.random()*low.length)];
   if(g.topics.length<2)g.topics=shuf(FMO.topics.map(function(_,i){return i}));
-  var w=g.guruTimes.map(function(t){return 1/(1+5*t)}),sum=w.reduce(function(a,b){return a+b},0),x=Math.random()*sum,guru=0;
+  var w=g.guruTimes.map(function(t){return 1/(1+10*t)}),sum=w.reduce(function(a,b){return a+b},0),x=Math.random()*sum,guru=0;
   for(var i=0;i<w.length;i++){x-=w[i];if(x<=0){guru=i;break}}
   var deal=shuf(pack().ids).slice(0,g.players.length);
   g.r={chooser:chooser,opts:[g.topics.pop(),g.topics.pop()],topic:null,guru:guru,deal:deal,seen:0,peeked:false,asked:false,lap:1,lapUsed:false,got:{},used:null,delta:null};
