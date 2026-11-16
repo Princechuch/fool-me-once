@@ -1,6 +1,6 @@
 # Fool Me Once
 
-Playtest version 0.2 (13 November 2026) of two card games for the family table about the tricks used to sell to you and persuade you online.
+Playtest version 0.3 (16 November 2026) of two card games for the family table about the tricks used to sell to you and persuade you online.
 
 - **The Guru:** one player secretly slips a trick into the conversation; the rest catch who and name the trick.
 - **The Pitch:** sell the table something ridiculous using a real trick; the rest name it.

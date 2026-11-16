@@ -1,4 +1,4 @@
-// Fool Me Once v0.2 (13/11/2026): The Guru and The Pitch, one phone on the table.
+// Fool Me Once v0.3 (16/11/2026): honest rounds, three Question cards, spotted-for-real points, Make it True. v0.2 (13/11/2026): The Guru and The Pitch, one phone on the table.
 (function(){
 var E=FMO_EXTRA;
 var T={en:{
@@ -23,7 +23,7 @@ var T={en:{
  talkH:"Topic",order:"Speaking order",talkDo:"One or two sentences each. Citizens say what they really think.",lap2:"Second lap: one more sentence each.",
  toDebate:"Everyone has spoken",
  debH:"Debate",debSub:"Two minutes. Ask anyone anything. Citizens can say what trick card they hold, or bluff.",
- qBtn:"Play the Question card",qUsed:"Question asked",qBig:"Who wins if I believe this?",qSub:"Ask it to anyone, once this round. They have to answer.",qOk:"Asked",
+ qBtn:"Play a Question card",qUsed:"Question asked",qBig:"Who wins if I believe this?",qs:["Who wins if I believe this?","How do you know?","What would it take for this to be true?"],qPick:"Pick one and ask it to anyone, once this round. They have to answer.",qSub:"Ask it to anyone, once this round. They have to answer.",qOk:"Asked",hon:"Honest round",honDo:"No trick for you this time. Give a real, fair reason. Act like the Guru anyway: the table has to work out there is no trick.",honCit:"Your card: Honest. It is NOT the Guru's card.",honCard:"No trick this round",honSays:"The Guru argued honestly.",honWhat:"Not everything is a trick. Telling a fair reason apart from a trick is the whole point.",gotN:"No trick ✊ +2",voteDo4:"Think there was no trick? Show a fist.",hTrust:"Trusted, and rightly so",hTrustS:function(n){return "Half the table or more saw there was no trick. "+n+" scores 2."},hDoubt:"Nobody believed the honest Guru",hDoubtS:function(n){return n+" was honest, but most of the table saw a trick. 0 for "+n+"."},wildH:"Spotted one for real?",wildSub:"Since your last game, did anyone see one of the tricks for real: on the phone, on TV, in the street? Tell it in one sentence. If the table agrees, +1.",wildTog:"Spotted +1",wildGo:"Start the game",mitH:"Make it True",mitDo:"One minute. Take the sentence that fooled the table most tonight and rewrite it so it tells the truth. Read both out loud.",homeH:"Before the next game",homeDo:"Spot one trick for real this week. Telling it at the start of the next game is worth 1 point.",
  lapBtn:"We need another lap",lapUsed:"Extra lap used",vote:"Vote",
  voteH:"Get your hands ready",voteDo1:"One hand points at the Guru.",voteDo2:function(n){return "The other shows the trick number, 1 to "+n+"."},voteDo3:"The Guru bluffs along.",count:"Count us in",fool:"Fool!",
  holdStill:"Hold still!",holdStillSub:"Hands where everyone can see them.",reveal:"Reveal",
@@ -48,8 +48,8 @@ var T={en:{
  pTallySub:function(n){return "Who named "+n+"'s trick? +1 each."},pNext:"Next",
  pSome:function(n){return n+" scores 2: some named it, not all."},pAll:function(n){return "Everyone named it. Too obvious: "+n+" scores 0."},pNone:function(n){return "Nobody named it. Too hidden: "+n+" scores 0."},
  bought:"Bought",pRest:function(n){return n===1?"One seller scores 0: everyone named the trick, or nobody did.":n+" sellers score 0: everyone named the trick, or nobody did."},
- howGuru:[["Pack and roles","One trick pack on the table. Everyone gets a role card (one Guru, the rest Citizens) and a trick card, face down."],["Topic","Whoever has the fewest points picks between two topics and speaks first."],["Talk","One or two sentences each. Citizens say what they really think. The Guru slips the trick in."],["Debate","Two minutes. Ask anyone anything. Citizens know their own trick card is not the Guru's. You can bluff about it."],["Another lap?","If the table wants, one more sentence each. Once per round."],["Three, two, one, fool!","All at once: one hand points at the Guru, the other shows the trick number."],["Reveal","Flip the Guru's trick and answer its question together."]],
- scGuru:["Right trick: 2 points, even if you pointed at the wrong person.","Right person: 1 point.","The Guru: 2 if some players name the trick but not all. If nobody names it, the Guru says the sentence and the table decides: really there, 1 point; not there, 0. If everyone names it, 0."],
+ howGuru:[["Pack and roles","One trick pack on the table. Everyone gets a role card (one Guru, the rest Citizens) and a trick card, face down. Two of the trick cards say Honest: if the Guru gets one, there is no trick this round."],["Topic","Whoever has the fewest points picks between two topics and speaks first."],["Talk","One or two sentences each. Citizens say what they really think. The Guru slips the trick in."],["Debate","Two minutes. Ask anyone anything. Citizens know their own trick card is not the Guru's. You can bluff about it. Once per round, play a Question card: who wins if I believe this, how do you know, or what would it take for this to be true."],["Another lap?","If the table wants, one more sentence each. Once per round."],["Three, two, one, fool!","All at once: one hand points at the Guru, the other shows the trick number, or a fist if you think there was no trick."],["Reveal","Flip the Guru's trick and answer its question together."]],
+ scGuru:["Right trick: 2 points, even if you pointed at the wrong person.","Right person: 1 point.","The Guru: 2 if some players name the trick but not all. If nobody names it, the Guru says the sentence and the table decides: really there, 1 point; not there, 0. If everyone names it, 0.","Honest round: a fist is worth 2. The honest Guru scores 2 if half the table or more saw there was no trick.","Spotted a trick for real since the last game? Tell it at the start: 1 point."],
  howPitch:[["Buyer and product","One player is the buyer this round. Draw a product and a buyer card."],["Secret tricks","Every seller gets one trick from the pack, in secret."],["Prepare","60 seconds, all at once."],["Sell","20 seconds each. Use your trick, don't name it."],["Buy","The buyer buys one pitch: +1 to that seller."],["Name the tricks","For each seller, everyone else shows the trick number on three."]],
  scPitch:["Right trick: 1 point for each guesser.","The seller: 2 if some name the trick but not all.","The buyer's choice: 1 point."],
  fair:"House rules",fairs:["What a Citizen says is their real opinion. Nobody gets told off for it later.","Anyone can say “Pause” if a topic touches something real. Stop and talk. That's the best move in the game."],
@@ -76,7 +76,7 @@ es:{
  talkH:"Tema",order:"Orden para hablar",talkDo:"Una o dos frases cada uno. Los Ciudadanos dicen lo que piensan de verdad.",lap2:"Segunda vuelta: una frase más cada uno.",
  toDebate:"Ya han hablado todos",
  debH:"Debate",debSub:"Dos minutos. Preguntad lo que queráis a quien queráis. Los Ciudadanos pueden decir qué carta de truco tienen, o farolear.",
- qBtn:"Jugar la carta de la pregunta",qUsed:"Pregunta hecha",qBig:"¿Y quién gana si me lo creo?",qSub:"Hazla a quien quieras, una vez por ronda. Hay que contestar.",qOk:"Hecha",
+ qBtn:"Jugar una carta de pregunta",qUsed:"Pregunta hecha",qBig:"¿Y quién gana si me lo creo?",qs:["¿Y quién gana si me lo creo?","¿Cómo lo sabes?","¿Qué haría falta para que fuera verdad?"],qPick:"Elige una y házsela a quien quieras, una vez por ronda. Tiene que contestar.",hon:"Ronda honesta",honDo:"Esta vez no tienes truco. Da una razón de verdad, limpia. Haz de Gurú igual: la mesa tiene que darse cuenta de que no hay truco.",honCit:"Tu carta: Honesta. NO es la carta del Gurú.",honCard:"Esta ronda no había truco",honSays:"El Gurú ha argumentado limpio.",honWhat:"No todo es un truco. Distinguir una razón limpia de un truco es justo de lo que va esto.",gotN:"Sin truco ✊ +2",voteDo4:"¿Crees que no había truco? Enseña el puño.",hTrust:"Creído, y con razón",hTrustS:function(n){return "La mitad de la mesa o más vio que no había truco. "+n+" gana 2."},hDoubt:"Nadie se creyó al Gurú honesto",hDoubtS:function(n){return n+" fue limpio, pero casi toda la mesa vio truco. 0 para "+n+"."},wildH:"¿Habéis pillado alguno de verdad?",wildSub:"Desde la última partida, ¿alguien ha visto uno de los trucos de verdad: en el móvil, en la tele, en la calle? Cuéntalo en una frase. Si la mesa está de acuerdo, +1.",wildTog:"Pillado +1",wildGo:"Empezar la partida",mitH:"Make it True",mitDo:"Un minuto. Coged la frase que más os la coló esta noche y reescribidla para que diga la verdad. Leed las dos en voz alta.",homeH:"Antes de la próxima partida",homeDo:"Pillad un truco de verdad esta semana. Contarlo al empezar la próxima partida vale 1 punto.",qSub:"Hazla a quien quieras, una vez por ronda. Hay que contestar.",qOk:"Hecha",
  lapBtn:"Necesitamos otra vuelta",lapUsed:"Vuelta extra usada",vote:"A votar",
  voteH:"Preparad las manos",voteDo1:"Con una mano señaláis al Gurú.",voteDo2:function(n){return "Con la otra, el número del truco, del 1 al "+n+"."},voteDo3:"El Gurú disimula y vota también.",count:"Cuenta atrás",fool:"¡Pillado!",
  holdStill:"¡Quietos!",holdStillSub:"Las manos donde se vean.",reveal:"Destapar",
@@ -100,8 +100,8 @@ es:{
  pTallySub:function(n){return "¿Quién nombró el truco de "+n+"? +1 cada uno."},pNext:"Siguiente",
  pSome:function(n){return n+" gana 2: algunos lo nombraron, pero no todos."},pAll:function(n){return "Lo nombraron todos. Demasiado evidente: "+n+" se queda en 0."},pNone:function(n){return "No lo nombró nadie. Demasiado escondido: "+n+" se queda en 0."},
  bought:"Comprado",pRest:function(n){return n===1?"Un vendedor se queda en 0: lo nombraron todos o nadie.":n+" vendedores se quedan en 0: lo nombraron todos o nadie."},
- howGuru:[["Pack y papeles","Un pack de trucos en la mesa. A cada uno, una carta de papel (un Gurú y los demás Ciudadanos) y una de truco, boca abajo."],["Tema","El que va último en puntos elige entre dos temas y habla primero."],["Se habla","Una o dos frases cada uno. Los Ciudadanos dicen lo que piensan de verdad. El Gurú mete su truco."],["Debate","Dos minutos. Se pregunta lo que se quiera. Cada Ciudadano sabe que su carta de truco no es la del Gurú, y puede farolear."],["¿Otra vuelta?","Si la mesa quiere, una frase más cada uno. Una vez por ronda."],["Tres, dos, uno, ¡pillado!","Todos a la vez: una mano señala al Gurú y la otra marca el número del truco."],["El destape","Se da la vuelta al truco del Gurú y se contesta su pregunta entre todos."]],
- scGuru:["Acertar el truco: 2 puntos, aunque señales a quien no era.","Acertar la persona: 1 punto.","El Gurú: 2 si algunos nombran el truco pero no todos. Si no lo nombra nadie, dice la frase y decide la mesa: si estaba, 1 punto; si no, 0. Si lo nombran todos, 0."],
+ howGuru:[["Pack y papeles","Un pack de trucos en la mesa. A cada uno, una carta de papel (un Gurú y los demás Ciudadanos) y una de truco, boca abajo. Dos cartas de truco dicen Honesta: si le toca al Gurú, esa ronda no hay truco."],["Tema","El que va último en puntos elige entre dos temas y habla primero."],["Se habla","Una o dos frases cada uno. Los Ciudadanos dicen lo que piensan de verdad. El Gurú mete su truco."],["Debate","Dos minutos. Se pregunta lo que se quiera. Cada Ciudadano sabe que su carta de truco no es la del Gurú, y puede farolear. Una vez por ronda, una carta de pregunta: ¿y quién gana si me lo creo?, ¿cómo lo sabes? o ¿qué haría falta para que fuera verdad?"],["¿Otra vuelta?","Si la mesa quiere, una frase más cada uno. Una vez por ronda."],["Tres, dos, uno, ¡pillado!","Todos a la vez: una mano señala al Gurú y la otra marca el número del truco, o el puño si crees que no había truco."],["El destape","Se da la vuelta al truco del Gurú y se contesta su pregunta entre todos."]],
+ scGuru:["Acertar el truco: 2 puntos, aunque señales a quien no era.","Acertar la persona: 1 punto.","El Gurú: 2 si algunos nombran el truco pero no todos. Si no lo nombra nadie, dice la frase y decide la mesa: si estaba, 1 punto; si no, 0. Si lo nombran todos, 0.","Ronda honesta: el puño vale 2. El Gurú honesto gana 2 si la mitad de la mesa o más vio que no había truco.","¿Habéis pillado un truco de verdad desde la última partida? Contadlo al empezar: 1 punto."],
  howPitch:[["Comprador y producto","Un jugador compra esta ronda. Se roba un producto y una carta de comprador."],["Trucos secretos","Cada vendedor recibe un truco del pack, en secreto."],["Preparar","60 segundos, todos a la vez."],["Vender","20 segundos cada uno. Usa tu truco sin nombrarlo."],["Comprar","El comprador compra un anuncio: +1 para ese vendedor."],["Nombrar los trucos","Por cada vendedor, los demás marcan el número del truco a la de tres."]],
  scPitch:["Acertar un truco: 1 punto para cada uno que acierte.","El vendedor: 2 si algunos nombran el truco pero no todos.","El elegido por el comprador: 1 punto."],
  fair:"Reglas de la casa",fairs:["Lo que dice un Ciudadano es su opinión de verdad. Nadie se lo echa en cara después.","Cualquiera puede decir «Pausa» si un tema toca algo real. Se para y se habla. Es la mejor jugada del juego."],
@@ -121,6 +121,7 @@ function mo(id){return E.more[id][S.lang]}
 function th(k){return FMO.themes[k]}
 function pack(){return E.packs[S.game?S.game.pack-1:S.pack-1]}
 function num(id){return pack().ids.indexOf(id)+1}
+function veterans(){var al=albums();return S.game&&S.game.players.some(function(p){var a=al[p.toLowerCase()];return a&&a.ids.length})}
 function named(){return S.names.map(function(x){return x.trim()}).filter(Boolean)}
 function addAlbum(name,id){var al=albums(),k=name.toLowerCase();al[k]=al[k]||{name:name,ids:[]};if(al[k].ids.indexOf(id)<0)al[k].ids.push(id);saveAlbums(al)}
 
@@ -140,8 +141,8 @@ function startRound(){
   if(g.topics.length<2)g.topics=shuf(FMO.topics.map(function(_,i){return i}));
   var w=g.guruTimes.map(function(t){return 1/(1+10*t)}),sum=w.reduce(function(a,b){return a+b},0),x=Math.random()*sum,guru=0;
   for(var i=0;i<w.length;i++){x-=w[i];if(x<=0){guru=i;break}}
-  var deal=shuf(pack().ids).slice(0,g.players.length);
-  g.r={chooser:chooser,opts:[g.topics.pop(),g.topics.pop()],topic:null,guru:guru,deal:deal,seen:0,peeked:false,asked:false,lap:1,lapUsed:false,got:{},used:null,delta:null};
+  var deal=shuf(pack().ids.concat([0,0])).slice(0,g.players.length);
+  g.r={chooser:chooser,opts:[g.topics.pop(),g.topics.pop()],topic:null,guru:guru,deal:deal,honest:deal[guru]===0,seen:0,peeked:false,asked:false,lap:1,lapUsed:false,got:{},used:null,delta:null};
   S.scr='pick';
  }else{
   var n=g.players.length,buyer=(g.round-1)%n,sellers=[];for(var k=1;k<n;k++)sellers.push((buyer+k)%n);
@@ -156,6 +157,8 @@ function order(){var g=S.game,o=[];for(var i=0;i<g.players.length;i++)o.push((g.
 function guruTrick(){var r=S.game.r;return r.deal[r.guru]}
 function scoreGuru(){
  var g=S.game,r=g.r,d=g.players.map(function(){return 0}),tid=guruTrick(),n=0,voters=g.players.length-1;
+ if(r.honest){g.players.forEach(function(p,i){if(i===r.guru)return;var v=r.got[i]||{};if(v.t){d[i]+=2;n++;g.named[i]++}if(v.g)d[i]+=1});
+  r.verdict=n*2>=voters?'trust':'doubt';var hp=r.verdict==='trust'?2:0;d[r.guru]+=hp;g.special[r.guru]+=hp;g.guruTimes[r.guru]++;r.delta=d;d.forEach(function(x,i){g.scores[i]+=x});S.scr='scores';return}
  g.players.forEach(function(p,i){if(i===r.guru)return;var v=r.got[i]||{};if(v.t){d[i]+=2;n++;g.named[i]++;addAlbum(p,tid)}if(v.g)d[i]+=1});
  r.verdict=n===0?(r.used?'hid':'none'):n===voters?'all':'some';
  var gp=r.verdict==='some'?2:r.verdict==='hid'?1:0;d[r.guru]+=gp;g.special[r.guru]+=gp;
@@ -176,9 +179,11 @@ function tag(k){return '<span class="tag" style="background:'+th(k).color+'">'+e
 function trickCard(id,stamp){var tr=trick(id),t=tx(tr),m=mo(id);
  return '<div class="flip"><div class="in"><div class="card">'+(stamp?'<span class="stamp">'+stamp+'</span>':'')+'<span class="kind">'+L.trickN(num(id))+'</span><span class="name"><span class="paint">'+esc(t.name)+'</span></span><span class="says">“'+esc(t.says)+'”</span>'+
  '<dl><div><dt>'+L.what+'</dt><dd>'+esc(t.what)+'</dd></div><div><dt>'+L.sounds+'</dt><dd><ul class="ex">'+m.ex.map(function(x){return '<li>“'+esc(x)+'”</li>'}).join('')+'</ul></dd></div><div class="notsame"><b>'+L.notSame+':</b> '+esc(m.not)+'</div><div><dt>'+L.where+'</dt><dd>'+esc(t.where)+'</dd></div></dl><div class="ask"><span style="font-size:.85rem;display:block;font-weight:400">'+L.ask+'</span>'+esc(t.ask)+'</div><span class="band" style="background:'+th(tr.theme).color+'"></span></div></div></div>'}
-function peekFront(isG,id){var t=tx(trick(id)),m=mo(id);
+function peekFront(isG,id){if(id===0){if(isG)return '<div class="front guru"><span style="font-weight:700">'+L.guru+'</span><span class="disp" style="font-size:1.9rem">'+L.hon+'</span><span style="font-size:.95rem">'+L.honDo+'</span></div>';return '<div class="front"><span class="disp" style="font-size:2.2rem">'+L.cit+'</span><span>'+L.citDo+'</span><span class="disp" style="font-size:1.2rem;margin-top:8px">'+L.honCit+'</span></div>'}
+ var t=tx(trick(id)),m=mo(id);
  if(isG)return '<div class="front guru"><span style="font-weight:700">'+L.guru+'</span><span class="disp" style="font-size:1.1rem">'+L.trickN(num(id))+'</span><span class="disp" style="font-size:1.9rem">'+esc(t.name)+'</span><span style="font-style:italic">“'+esc(t.says)+'”</span><span style="font-style:italic;font-size:.95rem">“'+esc(m.ex[0])+'”</span><span style="font-size:.92rem">'+L.guruDo+'</span></div>';
  return '<div class="front"><span class="disp" style="font-size:2.2rem">'+L.cit+'</span><span>'+L.citDo+'</span><span style="font-size:.9rem;color:var(--muted);margin-top:8px">'+L.citTrick+'</span><span class="disp" style="font-size:1.3rem"><b>'+num(id)+'</b> · '+esc(t.name)+'</span></div>'}
+function honestCard(){return '<div class="flip"><div class="in"><div class="card"><span class="stamp">'+L.hon+'</span><span class="kind">✊</span><span class="name"><span class="paint">'+L.honCard+'</span></span><span class="says">'+L.honSays+'</span><dl><div><dd>'+L.honWhat+'</dd></div></dl><span class="band" style="background:var(--hi)"></span></div></div></div>'}
 function peekBox(front){return '<div class="peek" id="peek"><div class="back"><span class="big">'+L.holdA+'<br><span>'+L.holdB+'</span></span><span style="opacity:.8;font-size:.95rem">'+L.holdSub+'</span></div>'+front+'</div>'}
 function scoreRows(delta){var g=S.game,max=Math.max.apply(null,g.scores),idx=g.players.map(function(_,i){return i}).sort(function(a,b){return g.scores[b]-g.scores[a]});
  return '<div class="scores">'+idx.map(function(i){return '<div class="srow '+(g.scores[i]===max&&max>0?'lead':'')+'"><b>'+esc(g.players[i])+'</b><span class="d">'+(delta&&delta[i]?'+'+delta[i]:'')+'</span><span class="t">'+g.scores[i]+'</span></div>'}).join('')+'</div>'}
@@ -203,7 +208,8 @@ players:function(){var guru=S.mode==='guru',mn=3,mx=guru?6:8,ok=named().length>=
  :'<div><p style="font-weight:700;margin-bottom:6px">'+L.prodH+'</p><div class="seg"><button data-a="pa" class="'+(S.prod==='absurd'?'on':'')+'">'+L.prodAbsurd+'</button><button data-a="ph" class="'+(S.prod==='home'?'on':'')+'">'+L.prodHome+'</button><button data-a="pm" class="'+(S.prod==='mix'?'on':'')+'">'+L.prodMix+'</button></div></div>'+
   '<div><p style="font-weight:700;margin-bottom:6px">'+L.pitchRounds+'</p><div class="seg"><button data-a="r3" class="'+(S.rounds===3?'on':'')+'">'+L.pitchQuick+'</button><button data-a="r5" class="'+(S.rounds!==3?'on':'')+'">'+L.pitchAll+'</button></div></div>')+
  '<div class="grow"></div><button class="btn yellow" id="go" data-a="start" '+(ok?'':'disabled')+'>'+L.start+'</button>'},
-pack:function(){return '<h2>'+esc(pack()[S.lang])+'</h2><p class="sub">'+L.packRead+'</p>'+packList()+'<div class="grow"></div><button class="btn yellow" data-a="round">'+L.ready+'</button>'},
+pack:function(){return '<h2>'+esc(pack()[S.lang])+'</h2><p class="sub">'+L.packRead+'</p>'+packList()+'<div class="grow"></div><button class="btn yellow" data-a="'+(veterans()?'wild':'round')+'">'+L.ready+'</button>'},
+wild:function(){var g=S.game;g.wild=g.wild||{};return '<h2>'+L.wildH+'</h2><p class="sub">'+L.wildSub+'</p><div class="tally">'+g.players.map(function(p,i){return '<div class="trow" style="grid-template-columns:minmax(0,1fr) auto"><b>'+esc(p)+'</b><button class="tog '+(g.wild[i]?'on':'')+'" data-a="wd" data-i="'+i+'">'+L.wildTog+'</button></div>'}).join('')+'</div><div class="grow"></div><button class="btn yellow" data-a="wildGo">'+L.wildGo+'</button>'},
 pick:function(){var g=S.game,r=g.r;return '<h2>'+esc(L.pickH(g.players[r.chooser]))+'</h2><p class="sub">'+(g.round===1?L.pickSub1:L.pickSub)+'</p>'+r.opts.map(function(ti,i){var t=FMO.topics[ti];return '<button class="pick" data-a="topic" data-i="'+i+'">'+tag(t.theme)+'<span class="topic">'+esc(t[S.lang])+'</span></button>'}).join('')},
 pass:function(){var g=S.game,r=g.r,p=g.mode==='guru'?order()[r.seen]:r.sellers[r.seen];
  return '<div class="grow"></div><p class="sub">'+L.passTo+'</p><h1>'+esc(g.players[p])+'</h1><div class="grow"></div><button class="btn" data-a="iam">'+esc(L.iam(g.players[p]))+'</button>'},
@@ -216,16 +222,16 @@ talk:function(){var g=S.game,r=g.r,t=FMO.topics[r.topic];
  '<p class="sub" style="font-size:.98rem"><b style="color:var(--ink)">'+L.order+':</b> '+order().map(function(i){return esc(g.players[i])}).join(', ')+'. '+L.talkDo+'</p>'+packMini()+
  '<div class="grow"></div><button class="btn yellow" data-a="debate">'+L.toDebate+'</button>'},
 debate:function(){var r=S.game.r;return '<h2>'+L.debH+'</h2><p class="sub">'+L.debSub+'</p>'+timerHTML(120)+packMini()+'<div class="grow"></div><div class="stack"><button class="btn ghost small" data-a="ask" '+(r.asked?'disabled':'')+'>'+(r.asked?L.qUsed:L.qBtn)+'</button><button class="btn ghost small" data-a="lap" '+(r.lapUsed?'disabled':'')+'>'+(r.lapUsed?L.lapUsed:L.lapBtn)+'</button><button class="btn yellow" data-a="vote">'+L.vote+'</button></div>'},
-ask:function(){return '<div class="grow"></div><h1><span class="paint">'+L.qBig+'</span></h1><p class="sub">'+L.qSub+'</p><div class="grow"></div><button class="btn" data-a="asked">'+L.qOk+'</button>'},
-vote:function(){return '<h2>'+L.voteH+'</h2><ol class="rules"><li><div><b>'+L.voteDo1+'</b></div></li><li><div><b>'+L.voteDo2(8)+'</b></div></li></ol><p class="sub">'+L.voteDo3+'</p>'+packMini()+'<div class="grow"></div><button class="btn yellow" data-a="count">'+L.count+'</button>'},
+ask:function(){return '<div class="grow"></div>'+L.qs.map(function(q,i){return '<h2>'+(i===0?'<span class="paint">':'')+esc(q)+(i===0?'</span>':'')+'</h2>'}).join('')+'<p class="sub">'+L.qPick+'</p><div class="grow"></div><button class="btn" data-a="asked">'+L.qOk+'</button>'},
+vote:function(){return '<h2>'+L.voteH+'</h2><ol class="rules"><li><div><b>'+L.voteDo1+'</b></div></li><li><div><b>'+L.voteDo2(8)+'</b></div></li><li><div><b>'+L.voteDo4+'</b></div></li></ol><p class="sub">'+L.voteDo3+'</p>'+packMini()+'<div class="grow"></div><button class="btn yellow" data-a="count">'+L.count+'</button>'},
 count:function(){return '<div class="count" id="cnt" aria-live="assertive"><span>3</span></div>'},
 still:function(){return '<div class="grow"></div><h1>'+L.holdStill+'</h1><p class="sub">'+L.holdStillSub+'</p><div class="grow"></div><button class="btn yellow" data-a="'+(S.game.mode==='guru'?'reveal':'pReveal')+'">'+(S.game.mode==='guru'?L.reveal:L.pShow)+'</button>'},
-reveal:function(){var g=S.game;return '<h2>'+esc(L.wasGuru(g.players[g.r.guru]))+'</h2>'+trickCard(guruTrick(),L.caught)+'<div class="grow"></div><button class="btn" data-a="tally">'+L.tallyH+'</button>'},
+reveal:function(){var g=S.game;return '<h2>'+esc(L.wasGuru(g.players[g.r.guru]))+'</h2>'+(g.r.honest?honestCard():trickCard(guruTrick(),L.caught))+'<div class="grow"></div><button class="btn" data-a="tally">'+L.tallyH+'</button>'},
 tally:function(){var g=S.game,r=g.r;
  return '<h2>'+L.tallyH+'</h2><p class="sub">'+esc(L.tallySub(g.players[r.guru]))+'</p><div class="tally">'+g.players.map(function(p,i){if(i===r.guru)return '';var v=r.got[i]||{};
-  return '<div class="trow"><b>'+esc(p)+'</b><button class="tog '+(v.g?'on':'')+'" data-a="tg" data-i="'+i+'" aria-pressed="'+!!v.g+'">'+L.gotG+' +1</button><button class="tog '+(v.t?'on':'')+'" data-a="tt" data-i="'+i+'" aria-pressed="'+!!v.t+'">'+L.gotT+' +2</button></div>'}).join('')+'</div><div class="grow"></div><button class="btn yellow" data-a="score">'+L.score+'</button>'},
+  return '<div class="trow"><b>'+esc(p)+'</b><button class="tog '+(v.g?'on':'')+'" data-a="tg" data-i="'+i+'" aria-pressed="'+!!v.g+'">'+L.gotG+' +1</button><button class="tog '+(v.t?'on':'')+'" data-a="tt" data-i="'+i+'" aria-pressed="'+!!v.t+'">'+(r.honest?L.gotN:L.gotT+' +2')+'</button></div>'}).join('')+'</div><div class="grow"></div><button class="btn yellow" data-a="score">'+L.score+'</button>'},
 used:function(){var g=S.game;return '<h2>'+L.usedH+'</h2><p class="sub">'+esc(L.usedSub(g.players[g.r.guru]))+'</p><div class="grow"></div><div class="thumbs"><button class="btn yellow" data-a="usedY">👍 '+L.usedYes+'</button><button class="btn ghost" data-a="usedN">👎 '+L.usedNo+'</button></div>'},
-scores:function(){var g=S.game,r=g.r,gn=g.players[r.guru],v=r.verdict,H={some:[L.gSome,L.gSomeS],all:[L.gAll,L.gAllS],hid:[L.gHid,L.gHidS],none:[L.gNone,L.gNoneS]}[v];
+scores:function(){var g=S.game,r=g.r,gn=g.players[r.guru],v=r.verdict,H={some:[L.gSome,L.gSomeS],all:[L.gAll,L.gAllS],hid:[L.gHid,L.gHidS],none:[L.gNone,L.gNoneS],trust:[L.hTrust,L.hTrustS],doubt:[L.hDoubt,L.hDoubtS]}[v];
  return '<div class="verdict"><b>'+H[0]+'</b>'+esc(H[1](gn))+'</div><h2>'+L.scoresH+'</h2>'+scoreRows(r.delta)+'<div class="grow"></div><button class="btn yellow" data-a="after">'+(g.round>=g.total?L.finish:L.next)+'</button>'},
 // pitch
 pBrief:function(){var g=S.game,r=g.r,pr=poolList()[r.prod],b=E.pitch.buyers[r.as];
@@ -244,7 +250,7 @@ end:function(){var g=S.game,max=Math.max.apply(null,g.scores),w=g.players.filter
  var hard=best(g.named),sm=best(g.special),idx=g.players.map(function(_,i){return i}).sort(function(a,b){return g.scores[b]-g.scores[a]});
  return '<h1><span class="paint">'+esc(w.length>1?L.tieH(w.join(', ')):L.winH(w[0]))+'</span></h1><div class="scores">'+idx.map(function(i){return '<div class="srow"><b>'+esc(g.players[i])+'</b><span></span><span class="t">'+g.scores[i]+'</span></div>'}).join('')+'</div>'+
  (hard?'<div class="note"><b>'+L.hard+':</b> '+esc(hard)+'</div>':'')+(sm?'<div class="note"><b>'+(g.mode==='guru'?L.smooth:L.bestSeller)+':</b> '+esc(sm)+'</div>':'')+
- '<div class="grow"></div><div class="stack"><button class="btn yellow" data-a="again">'+L.again+'</button><div class="rowb"><button class="btn ghost small" data-a="album">'+L.album+'</button><button class="btn ghost small" data-a="home">'+L.home+'</button></div></div>'},
+ '<div class="note"><b>'+L.mitH+':</b> '+L.mitDo+'</div><div class="note"><b>'+L.homeH+':</b> '+L.homeDo+'</div><div class="grow"></div><div class="stack"><button class="btn yellow" data-a="again">'+L.again+'</button><div class="rowb"><button class="btn ghost small" data-a="album">'+L.album+'</button><button class="btn ghost small" data-a="home">'+L.home+'</button></div></div>'},
 album:function(){var al=albums(),ks=Object.keys(al);
  return '<h2>'+L.albumH+'</h2><p class="sub">'+L.albumSub+'</p>'+(ks.length?ks.map(function(k){var a=al[k],got=a.ids.filter(function(id){return id!==15});return '<div class="stack"><h3>'+esc(a.name)+' <span style="color:var(--muted);font-family:var(--body);font-weight:400;font-size:1rem">'+got.length+' '+L.of+'</span></h3><div class="album">'+E.packs.flatMap(function(p){return p.ids}).map(function(id){var h=got.indexOf(id)>=0;return '<div class="'+(h?'got':'')+'" title="'+(h?esc(tx(trick(id)).name):'')+'">'+id+'</div>'}).join('')+'</div></div>'}).join(''):'<div class="note">'+L.albumEmpty+'</div>')+
  '<div class="grow"></div><div class="stack"><button class="btn" data-a="back">'+L.back+'</button>'+(ks.length?'<button class="btn ghost small" data-a="clear">'+L.clear+'</button>':'')+'</div>'},
@@ -283,6 +289,9 @@ app.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!
  case 'pa':S.prod='absurd';render();break;case 'ph':S.prod='home';render();break;case 'pm':S.prod='mix';render();break;
  case 'start':case 'again':newGame();render();break;
  case 'round':startRound();render();break;
+ case 'wild':go('wild');break;
+ case 'wd':g.wild=g.wild||{};g.wild[i]=!g.wild[i];b.classList.toggle('on',g.wild[i]);save();break;
+ case 'wildGo':Object.keys(g.wild||{}).forEach(function(k){if(g.wild[k])g.scores[k]+=1});startRound();render();break;
  case 'topic':r.topic=r.opts[i];go('pass');break;
  case 'iam':r.peeked=false;go('peek');break;
  case 'seen':r.seen++;r.peeked=false;
@@ -296,7 +305,7 @@ app.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!
  case 'reveal':go('reveal');break;
  case 'tally':go('tally');break;
  case 'tg':case 'tt':r.got[i]=r.got[i]||{};var k=a==='tg'?'g':'t';r.got[i][k]=!r.got[i][k];b.classList.toggle('on',r.got[i][k]);b.setAttribute('aria-pressed',r.got[i][k]);save();break;
- case 'score':var any=Object.keys(r.got).some(function(k){return r.got[k].t});if(any){r.used=null;scoreGuru();render()}else go('used');break;
+ case 'score':if(r.honest){scoreGuru();render();break}var any=Object.keys(r.got).some(function(k){return r.got[k].t});if(any){r.used=null;scoreGuru();render()}else go('used');break;
  case 'usedY':r.used=true;scoreGuru();render();break;
  case 'usedN':r.used=false;scoreGuru();render();break;
  case 'after':if(g.round>=g.total)go('end');else{startRound();render()}break;
@@ -313,4 +322,5 @@ app.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!
  }});
 if(S.scr==='count')S.scr='vote';
 render();
+window.FMO_TEST=function(f){return f(S,render,order,pack)};
 })();
