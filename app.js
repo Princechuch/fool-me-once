@@ -40,18 +40,18 @@ var T={en:{
  albumH:"Trick album",albumSub:"Every trick you name goes in your album. 24 tricks in three packs.",albumEmpty:"No tricks yet. Play a round and name one.",of:"of 24",clear:"Clear albums",back:"Back",
  // pitch
  pBuyerIs:function(n){return n+" is the buyer"},pBuyerSub:"Buyer: say who you are. Everyone else sells to you.",pYouAre:"You're buying as",pProduct:"Today's product",
- pPeekDo:"Use this trick in your pitch. Don't say its name.",pTricksDealt:"Everyone has a trick",
+ pPeekDo:"Use this trick in your pitch. Don't say its name.",pHon:"Honest",pHonDo:"No trick for you. Sell it with real, fair reasons only. If the table sees it, you score.",pBoughtHon:function(n){return n+" +1: bought the honest pitch."},pTricksDealt:"Everyone has a trick",
  pPrepH:"Prepare your pitch",pPrepSub:"60 seconds, all at once. Shy? Write it down and ask someone to read it for you.",pStartTimer:"Start 60 seconds",pSkip:"We're ready",
  pSellH:function(n){return n+", sell it!"},pSellSub:"20 seconds. Use your trick.",pGo:"Go",pNextSeller:"Next seller",pDone:"Done",
- pBuyH:function(n){return n+", what do you buy?"},pBuySub:"Pick the pitch that convinced you. +1 for that seller.",
- pGuessH:function(n){return "What was "+n+"'s trick?"},pGuessSub:function(k){return "Everyone except the seller shows a number, 1 to "+k+", on three."},pShow:"Show the trick",
+ pBuyH:function(n){return n+", what do you buy?"},pBuySub:"Before you buy, you can ask one seller a Question card. Then pick the pitch that convinced you: +1 for that seller, and +1 for you if it was the honest one.",
+ pGuessH:function(n){return "What was "+n+"'s trick?"},pGuessSub:function(k){return "Everyone except the seller shows a number, 1 to "+k+", on three. A fist if you think it was the honest pitch."},pShow:"Show the trick",
  pTallySub:function(n){return "Who named "+n+"'s trick? +1 each."},pNext:"Next",
- pSome:function(n){return n+" scores 2: some named it, not all."},pAll:function(n){return "Everyone named it. Too obvious: "+n+" scores 0."},pNone:function(n){return "Nobody named it. Too hidden: "+n+" scores 0."},
+ pSome:function(n){return n+" scores 2: some named it, not all."},pTrust:function(n){return n+" scores 2: an honest pitch, and the table saw it."},pAll:function(n){return "Everyone named it. Too obvious: "+n+" scores 0."},pNone:function(n){return "Nobody named it. Too hidden: "+n+" scores 0."},
  bought:"Bought",pRest:function(n){return n===1?"One seller scores 0: everyone named the trick, or nobody did.":n+" sellers score 0: everyone named the trick, or nobody did."},
  howGuru:[["Pack and roles","One trick pack on the table. Everyone gets a role card (one Guru, the rest Citizens) and a trick card, face down. Two of the trick cards say Honest: if the Guru gets one, there is no trick this round."],["Topic","Whoever has the fewest points picks between two topics and speaks first."],["Talk","One or two sentences each. Citizens say what they really think. The Guru slips the trick in."],["Debate","Two minutes. Ask anyone anything. Citizens know their own trick card is not the Guru's. You can bluff about it. Once per round, play a Question card: who wins if I believe this, how do you know, or what would it take for this to be true."],["Another lap?","If the table wants, one more sentence each. Once per round."],["Three, two, one, fool!","All at once: one hand points at the Guru, the other shows the trick number, or a fist if you think there was no trick."],["Reveal","Flip the Guru's trick and answer its question together."]],
  scGuru:["Right trick: 2 points, even if you pointed at the wrong person.","Right person: 1 point.","The Guru: 2 if some players name the trick but not all. If nobody names it, the Guru says the sentence and the table decides: really there, 1 point; not there, 0. If everyone names it, 0.","Honest round: a fist is worth 2. The honest Guru scores 2 if half the table or more saw there was no trick.","Spotted a trick for real since the last game? Tell it at the start: 1 point."],
- howPitch:[["Buyer and product","One player is the buyer this round. Draw a product and a buyer card."],["Secret tricks","Every seller gets one trick from the pack, in secret."],["Prepare","60 seconds, all at once."],["Sell","20 seconds each. Use your trick, don't name it."],["Buy","The buyer buys one pitch: +1 to that seller."],["Name the tricks","For each seller, everyone else shows the trick number on three."]],
- scPitch:["Right trick: 1 point for each guesser.","The seller: 2 if some name the trick but not all.","The buyer's choice: 1 point."],
+ howPitch:[["Buyer and product","One player is the buyer this round. Draw a product and a buyer card."],["Secret tricks","Every seller gets one card from the pack, in secret: a trick, or Honest (no trick, only fair reasons)."],["Prepare","60 seconds, all at once."],["Sell","20 seconds each. Use your trick, don't name it."],["Ask and buy","The buyer may ask one seller a Question card, then buys one pitch: +1 to that seller, +1 to the buyer if it was the honest one."],["Name the tricks","For each seller, everyone else shows the trick number on three, or a fist for honest."]],
+ scPitch:["Right trick (or a fist for the honest one): 1 point for each guesser.","The seller: 2 if some name the trick but not all. Honest seller: 2 if half the table or more showed a fist.","The buyer's choice: 1 point. Buying the honest pitch: +1 for the buyer."],
  fair:"House rules",fairs:["What a Citizen says is their real opinion. Nobody gets told off for it later.","Anyone can say “Pause” if a topic touches something real. Stop and talk. That's the best move in the game."],
  scH:"Scoring"},
 es:{
@@ -92,18 +92,18 @@ es:{
  hard:"A quien menos se la cuelan",smooth:"El Gurú más fino",bestSeller:"El mejor vendedor",again:"Otra partida, los mismos",home:"Volver al inicio",
  albumH:"Álbum de trucos",albumSub:"Cada truco que nombras va a tu álbum. 24 trucos en tres packs.",albumEmpty:"Aún no hay trucos. Jugad una ronda y nombrad uno.",of:"de 24",clear:"Vaciar álbumes",back:"Volver",
  pBuyerIs:function(n){return n+" compra esta ronda"},pBuyerSub:"Comprador: di quién eres. Los demás te venden.",pYouAre:"Compras como",pProduct:"El producto de hoy",
- pPeekDo:"Usa este truco en tu anuncio. Sin decir su nombre.",pTricksDealt:"Todos tienen su truco",
+ pPeekDo:"Usa este truco en tu anuncio. Sin decir su nombre.",pHon:"Honesta",pHonDo:"Sin truco. Véndelo solo con razones de verdad, limpias. Si la mesa lo ve, puntúas.",pBoughtHon:function(n){return n+" +1: ha comprado el anuncio honesto."},pTricksDealt:"Todos tienen su truco",
  pPrepH:"Preparad el anuncio",pPrepSub:"60 segundos, todos a la vez. ¿Te da corte? Escríbelo y que lo lea otro.",pStartTimer:"Empezar 60 segundos",pSkip:"Ya estamos",
  pSellH:function(n){return n+", ¡véndelo!"},pSellSub:"20 segundos. Usa tu truco.",pGo:"Ya",pNextSeller:"Siguiente vendedor",pDone:"Listo",
- pBuyH:function(n){return n+", ¿qué compras?"},pBuySub:"Elige el anuncio que te ha convencido. +1 para ese vendedor.",
- pGuessH:function(n){return "¿Qué truco usó "+n+"?"},pGuessSub:function(k){return "Todos menos el vendedor marcan un número, del 1 al "+k+", a la de tres."},pShow:"Enseñar el truco",
+ pBuyH:function(n){return n+", ¿qué compras?"},pBuySub:"Antes de comprar, puedes hacerle una carta de pregunta a un vendedor. Luego elige el anuncio que te ha convencido: +1 para ese vendedor, y +1 para ti si era el honesto.",
+ pGuessH:function(n){return "¿Qué truco usó "+n+"?"},pGuessSub:function(k){return "Todos menos el vendedor marcan un número, del 1 al "+k+", a la de tres. El puño si crees que era el anuncio honesto."},pShow:"Enseñar el truco",
  pTallySub:function(n){return "¿Quién nombró el truco de "+n+"? +1 cada uno."},pNext:"Siguiente",
- pSome:function(n){return n+" gana 2: algunos lo nombraron, pero no todos."},pAll:function(n){return "Lo nombraron todos. Demasiado evidente: "+n+" se queda en 0."},pNone:function(n){return "No lo nombró nadie. Demasiado escondido: "+n+" se queda en 0."},
+ pSome:function(n){return n+" gana 2: algunos lo nombraron, pero no todos."},pTrust:function(n){return n+" gana 2: anuncio honesto, y la mesa lo vio."},pAll:function(n){return "Lo nombraron todos. Demasiado evidente: "+n+" se queda en 0."},pNone:function(n){return "No lo nombró nadie. Demasiado escondido: "+n+" se queda en 0."},
  bought:"Comprado",pRest:function(n){return n===1?"Un vendedor se queda en 0: lo nombraron todos o nadie.":n+" vendedores se quedan en 0: lo nombraron todos o nadie."},
  howGuru:[["Pack y papeles","Un pack de trucos en la mesa. A cada uno, una carta de papel (un Gurú y los demás Ciudadanos) y una de truco, boca abajo. Dos cartas de truco dicen Honesta: si le toca al Gurú, esa ronda no hay truco."],["Tema","El que va último en puntos elige entre dos temas y habla primero."],["Se habla","Una o dos frases cada uno. Los Ciudadanos dicen lo que piensan de verdad. El Gurú mete su truco."],["Debate","Dos minutos. Se pregunta lo que se quiera. Cada Ciudadano sabe que su carta de truco no es la del Gurú, y puede farolear. Una vez por ronda, una carta de pregunta: ¿y quién gana si me lo creo?, ¿cómo lo sabes? o ¿qué haría falta para que fuera verdad?"],["¿Otra vuelta?","Si la mesa quiere, una frase más cada uno. Una vez por ronda."],["Tres, dos, uno, ¡pillado!","Todos a la vez: una mano señala al Gurú y la otra marca el número del truco, o el puño si crees que no había truco."],["El destape","Se da la vuelta al truco del Gurú y se contesta su pregunta entre todos."]],
  scGuru:["Acertar el truco: 2 puntos, aunque señales a quien no era.","Acertar la persona: 1 punto.","El Gurú: 2 si algunos nombran el truco pero no todos. Si no lo nombra nadie, dice la frase y decide la mesa: si estaba, 1 punto; si no, 0. Si lo nombran todos, 0.","Ronda honesta: el puño vale 2. El Gurú honesto gana 2 si la mitad de la mesa o más vio que no había truco.","¿Habéis pillado un truco de verdad desde la última partida? Contadlo al empezar: 1 punto."],
- howPitch:[["Comprador y producto","Un jugador compra esta ronda. Se roba un producto y una carta de comprador."],["Trucos secretos","Cada vendedor recibe un truco del pack, en secreto."],["Preparar","60 segundos, todos a la vez."],["Vender","20 segundos cada uno. Usa tu truco sin nombrarlo."],["Comprar","El comprador compra un anuncio: +1 para ese vendedor."],["Nombrar los trucos","Por cada vendedor, los demás marcan el número del truco a la de tres."]],
- scPitch:["Acertar un truco: 1 punto para cada uno que acierte.","El vendedor: 2 si algunos nombran el truco pero no todos.","El elegido por el comprador: 1 punto."],
+ howPitch:[["Comprador y producto","Un jugador compra esta ronda. Se roba un producto y una carta de comprador."],["Trucos secretos","Cada vendedor recibe una carta del pack, en secreto: un truco, o Honesta (sin truco, solo razones limpias)."],["Preparar","60 segundos, todos a la vez."],["Vender","20 segundos cada uno. Usa tu truco sin nombrarlo."],["Preguntar y comprar","El comprador puede hacerle una carta de pregunta a un vendedor y luego compra un anuncio: +1 para ese vendedor, +1 para el comprador si era el honesto."],["Nombrar los trucos","Por cada vendedor, los demás marcan el número del truco a la de tres, o el puño si era honesto."]],
+ scPitch:["Acertar el truco (o el puño si era honesto): 1 punto para cada uno que acierte.","El vendedor: 2 si algunos nombran el truco pero no todos. El vendedor honesto: 2 si la mitad de la mesa o más enseña el puño.","El elegido por el comprador: 1 punto. Si compra el anuncio honesto: +1 para el comprador."],
  fair:"Reglas de la casa",fairs:["Lo que dice un Ciudadano es su opinión de verdad. Nadie se lo echa en cara después.","Cualquiera puede decir «Pausa» si un tema toca algo real. Se para y se habla. Es la mejor jugada del juego."],
  scH:"Los puntos"}};
 
@@ -148,7 +148,7 @@ function startRound(){
   var n=g.players.length,buyer=(g.round-1)%n,sellers=[];for(var k=1;k<n;k++)sellers.push((buyer+k)%n);
   if(!g.prods.length)g.prods=shuf(poolList().map(function(_,i){return i}));
   if(!g.buyers.length)g.buyers=shuf(E.pitch.buyers.map(function(_,i){return i}));
-  var d=shuf(pack().ids);
+  var d=shuf(pack().ids.concat([0,0]));
   g.r={buyer:buyer,sellers:sellers,prod:g.prods.pop(),as:g.buyers.pop(),tr:sellers.map(function(_,i){return d[i]}),seen:0,peeked:false,sell:0,bought:null,gi:0,got:{},delta:null,res:[]};
   S.scr='pBrief';
  }
@@ -166,8 +166,8 @@ function scoreGuru(){
 }
 function scorePitchSeller(){
  var g=S.game,r=g.r,si=r.gi,seller=r.sellers[si],tid=r.tr[si],n=0,others=g.players.length-1,d=g.players.map(function(){return 0});
- g.players.forEach(function(p,i){if(i===seller)return;if(r.got[i]){d[i]+=1;n++;g.named[i]++;addAlbum(p,tid)}});
- var v=n===0?'none':n===others?'all':'some';if(v==='some'){d[seller]+=2;g.special[seller]+=2}
+ g.players.forEach(function(p,i){if(i===seller)return;if(r.got[i]){d[i]+=1;n++;g.named[i]++;if(tid)addAlbum(p,tid)}});
+ var v=n===0?'none':n===others?'all':'some';if(!tid){v=n*2>=others?'trust':'doubt';if(v==='trust'){d[seller]+=2;g.special[seller]+=2}}else if(v==='some'){d[seller]+=2;g.special[seller]+=2}
  r.res.push({seller:seller,v:v});r.delta=r.delta||g.players.map(function(){return 0});d.forEach(function(x,i){r.delta[i]+=x;g.scores[i]+=x});r.got={};
 }
 
@@ -215,7 +215,7 @@ pass:function(){var g=S.game,r=g.r,p=g.mode==='guru'?order()[r.seen]:r.sellers[r
  return '<div class="grow"></div><p class="sub">'+L.passTo+'</p><h1>'+esc(g.players[p])+'</h1><div class="grow"></div><button class="btn" data-a="iam">'+esc(L.iam(g.players[p]))+'</button>'},
 peek:function(){var g=S.game,r=g.r,last,front,p;
  if(g.mode==='guru'){p=order()[r.seen];front=peekFront(p===r.guru,r.deal[p]);last=r.seen===g.players.length-1}
- else{p=r.sellers[r.seen];var id=r.tr[r.seen],t=tx(trick(id)),m=mo(id);front='<div class="front guru"><span style="font-weight:700">'+L.trickN(num(id))+'</span><span class="disp" style="font-size:1.9rem">'+esc(t.name)+'</span><span style="font-style:italic">“'+esc(t.says)+'”</span><span style="font-style:italic;font-size:.95rem">“'+esc(m.ex[0])+'”</span><span style="font-size:.92rem">'+L.pPeekDo+'</span></div>';last=r.seen===r.sellers.length-1}
+ else{p=r.sellers[r.seen];var id=r.tr[r.seen];if(id===0){front='<div class="front guru"><span class="disp" style="font-size:1.9rem">'+L.pHon+'</span><span style="font-size:.95rem">'+L.pHonDo+'</span></div>';last=r.seen===r.sellers.length-1}else{var t=tx(trick(id)),m=mo(id);front='<div class="front guru"><span style="font-weight:700">'+L.trickN(num(id))+'</span><span class="disp" style="font-size:1.9rem">'+esc(t.name)+'</span><span style="font-style:italic">“'+esc(t.says)+'”</span><span style="font-style:italic;font-size:.95rem">“'+esc(m.ex[0])+'”</span><span style="font-size:.92rem">'+L.pPeekDo+'</span></div>';last=r.seen===r.sellers.length-1}}
  return '<h3>'+esc(g.players[p])+'</h3>'+peekBox(front)+'<div class="grow"></div><button class="btn" id="hid" data-a="seen" '+(r.peeked?'':'disabled')+'>'+(last?(g.mode==='guru'?L.allSeen:L.pTricksDealt):L.hide)+'</button>'},
 talk:function(){var g=S.game,r=g.r,t=FMO.topics[r.topic];
  return '<div class="stack" style="gap:8px">'+tag(t.theme)+'<p class="topic">'+esc(t[S.lang])+'</p></div>'+(r.lap===2?'<div class="note"><b>'+L.lap2+'</b></div>':'')+
@@ -241,10 +241,10 @@ pSell:function(){var g=S.game,r=g.r,s=r.sellers[r.sell],pr=poolList()[r.prod],b=
  return '<h2>'+esc(L.pSellH(g.players[s]))+'</h2><p class="sub">'+L.pSellSub+'</p><div class="mini"><span>'+esc(pr[S.lang])+'</span><span>→ '+esc(b[S.lang])+'</span></div>'+timerHTML(20)+'<div class="grow"></div><div class="stack"><button class="btn ghost small" data-a="pSellGo" id="sg">'+L.pGo+'</button><button class="btn yellow" data-a="pSellNext">'+(r.sell===r.sellers.length-1?L.pDone:L.pNextSeller)+'</button></div>'},
 pBuy:function(){var g=S.game,r=g.r;return '<h2>'+esc(L.pBuyH(g.players[r.buyer]))+'</h2><p class="sub">'+L.pBuySub+'</p><div class="pickrow">'+r.sellers.map(function(s){return '<button class="btn ghost" data-a="pBought" data-i="'+s+'">'+esc(g.players[s])+'</button>'}).join('')+'</div>'},
 pGuess:function(){var g=S.game,r=g.r,s=r.sellers[r.gi];return '<h2>'+esc(L.pGuessH(g.players[s]))+'</h2><p class="sub">'+L.pGuessSub(8)+'</p>'+packMini()+'<div class="grow"></div><button class="btn yellow" data-a="count">'+L.count+'</button>'},
-pReveal:function(){var g=S.game,r=g.r,s=r.sellers[r.gi];return '<h2>'+esc(g.players[s])+'</h2>'+trickCard(r.tr[r.gi])+'<h3>'+esc(L.pTallySub(g.players[s]))+'</h3><div class="tally">'+g.players.map(function(p,i){if(i===s)return '';return '<div class="trow" style="grid-template-columns:minmax(0,1fr) auto"><b>'+esc(p)+'</b><button class="tog '+(r.got[i]?'on':'')+'" data-a="pt" data-i="'+i+'">'+L.gotT+' +1</button></div>'}).join('')+'</div><button class="btn yellow" data-a="pScoreSeller">'+L.pNext+'</button>'},
+pReveal:function(){var g=S.game,r=g.r,s=r.sellers[r.gi];return '<h2>'+esc(g.players[s])+'</h2>'+(r.tr[r.gi]===0?honestCard():trickCard(r.tr[r.gi]))+'<h3>'+esc(L.pTallySub(g.players[s]))+'</h3><div class="tally">'+g.players.map(function(p,i){if(i===s)return '';return '<div class="trow" style="grid-template-columns:minmax(0,1fr) auto"><b>'+esc(p)+'</b><button class="tog '+(r.got[i]?'on':'')+'" data-a="pt" data-i="'+i+'">'+L.gotT+' +1</button></div>'}).join('')+'</div><button class="btn yellow" data-a="pScoreSeller">'+L.pNext+'</button>'},
 pScores:function(){var g=S.game,r=g.r;
- var good=r.res.filter(function(x){return x.v==='some'}),rest=r.res.length-good.length;
- return '<div class="verdict"><b>'+esc(L.bought)+': '+esc(g.players[r.bought])+' +1</b>'+good.map(function(x){return esc(L.pSome(g.players[x.seller]))}).join('<br>')+(rest?'<br><span style="opacity:.8">'+esc(L.pRest(rest))+'</span>':'')+'</div><h2>'+L.scoresH+'</h2>'+scoreRows(r.delta)+'<div class="grow"></div><button class="btn yellow" data-a="after">'+(g.round>=g.total?L.finish:L.next)+'</button>'},
+ var good=r.res.filter(function(x){return x.v==='some'||x.v==='trust'}),rest=r.res.length-good.length;
+ return '<div class="verdict"><b>'+esc(L.bought)+': '+esc(g.players[r.bought])+' +1</b>'+(r.boughtHon?esc(L.pBoughtHon(g.players[r.buyer]))+'<br>':'')+good.map(function(x){return esc(x.v==='trust'?L.pTrust(g.players[x.seller]):L.pSome(g.players[x.seller]))}).join('<br>')+(rest?'<br><span style="opacity:.8">'+esc(L.pRest(rest))+'</span>':'')+'</div><h2>'+L.scoresH+'</h2>'+scoreRows(r.delta)+'<div class="grow"></div><button class="btn yellow" data-a="after">'+(g.round>=g.total?L.finish:L.next)+'</button>'},
 end:function(){var g=S.game,max=Math.max.apply(null,g.scores),w=g.players.filter(function(_,i){return g.scores[i]===max});
  function best(arr){var m=Math.max.apply(null,arr);return m>0?g.players.filter(function(_,i){return arr[i]===m}).join(', '):null}
  var hard=best(g.named),sm=best(g.special),idx=g.players.map(function(_,i){return i}).sort(function(a,b){return g.scores[b]-g.scores[a]});
@@ -315,7 +315,7 @@ app.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!
  case 'pSellStart':r.sell=0;go('pSell');break;
  case 'pSellGo':b.disabled=true;runTimer(20);break;
  case 'pSellNext':if(r.sell>=r.sellers.length-1)go('pBuy');else{r.sell++;render()}break;
- case 'pBought':r.bought=i;r.delta=g.players.map(function(){return 0});r.delta[i]+=1;g.scores[i]+=1;g.special[i]+=0;r.gi=0;r.got={};go('pGuess');break;
+ case 'pBought':r.bought=i;r.delta=g.players.map(function(){return 0});r.delta[i]+=1;g.scores[i]+=1;g.special[i]+=0;r.boughtHon=r.tr[r.sellers.indexOf(i)]===0;if(r.boughtHon){r.delta[r.buyer]+=1;g.scores[r.buyer]+=1}r.gi=0;r.got={};go('pGuess');break;
  case 'pReveal':go('pReveal');break;
  case 'pt':r.got[i]=!r.got[i];b.classList.toggle('on',r.got[i]);save();break;
  case 'pScoreSeller':scorePitchSeller();if(r.gi>=r.sellers.length-1){g.r.gi++;go('pScores')}else{r.gi++;go('pGuess')}break;

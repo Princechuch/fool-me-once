@@ -38,10 +38,13 @@ table{border-collapse:collapse;width:100%;font-size:9pt}
 td,th{border:.2mm solid #000;padding:1mm 1.5mm;text-align:left;height:6mm}
 th{font-size:8pt}
 td.x,th.x{width:15mm}
-</style></head><body><script src="cards.js"></script><script src="extra.js"></script><script>
-var lang=new URLSearchParams(location.search).get('lang')==='es'?'es':'en',E=FMO_EXTRA;
+.meta{color:#555;font-size:9pt;font-weight:700}
+.pts td{height:auto;padding:1.2mm 2mm;font-size:9pt}
+.line{border-bottom:.3mm solid #999;height:9mm}
+</style></head><body><script src="cards.js"></script><script src="extra.js"></script><script src="manual.js"></script><script>
+var Q=new URLSearchParams(location.search),lang=Q.get('lang')==='es'?'es':'en',E=FMO_EXTRA,M=FMO_MANUAL[lang],ONLY=Q.get('only');
 var P={en:{trick:"Trick",topic:"Topic",role:"Role",cit:"Citizen",citDo:"Say what you really think about the topic. Then catch the Guru.",citTrick:"Your trick card is NOT the Guru's trick.",guru:"Guru",guruDo:"Slip your trick into what you say. Don't say its name. Not too obvious, not too hidden.",
- what:"What it is",sounds:"It sounds like",not:"Not the same as",ask:"Ask the table",q:"Who wins if I believe this?",qs:["Who wins if I believe this?","How do you know?","What would it take for this to be true?"],hon:"Honest",honDo:"No trick. If you are the Guru, give a real, fair reason and act like the Guru anyway. If you are a Citizen, this card is not the Guru's.",qBk:"The Question",qDo:"Once per round, during the debate. Grab it and ask anyone. They have to answer.",
+ what:"What it is",sounds:"It sounds like",not:"Not the same as",ask:"Ask the table",q:"Who wins if I believe this?",qs:["Who wins if I believe this?","How do you know?","What would it take for this to be true?"],hon:"Honest",honDo:"No trick. The Guru argues fairly and acts like the Guru anyway; a Citizen knows this is not the Guru's card. In The Pitch: sell with real, fair reasons only.",qBk:"The Question",qDo:"Once per round, during the debate. Grab it and ask anyone. They have to answer.",
  prod:"Sell this",home:"Sell this (from home)",buyer:"You're buying as",packBk:"Trick pack",
  sheet:"Cut along the grey lines. Print double-sided, flip on the long edge.",front:"front",back:"back",
  title:"Fool Me Once.",sub:"Two card games about the tricks used to sell to you and persuade you online. Playtest version 0.3, 16 November 2026.",
@@ -62,7 +65,7 @@ var P={en:{trick:"Trick",topic:"Topic",role:"Role",cit:"Citizen",citDo:"Say what
  testH:"For the playtest",test:"Tell us: which rule was confusing? Which card? Did anyone ask to play again? Did a kid name a trick outside the game?",
  scoreSheet:"Score sheet",player:"Player",total:"Total",albumSheet:"Trick album: tick each trick a player names for the first time",r:"R"},
 es:{trick:"Truco",topic:"Tema",role:"Papel",cit:"Ciudadano",citDo:"Di lo que piensas de verdad sobre el tema. Luego, pilla al Gurú.",citTrick:"Tu carta de truco NO es el truco del Gurú.",guru:"Gurú",guruDo:"Mete tu truco en lo que digas. Sin decir su nombre. Ni muy evidente ni muy escondido.",
- what:"Qué es",sounds:"Cómo suena",not:"No es lo mismo que",ask:"Pregunta para la mesa",q:"¿Y quién gana si me lo creo?",qs:["¿Y quién gana si me lo creo?","¿Cómo lo sabes?","¿Qué haría falta para que fuera verdad?"],hon:"Honesta",honDo:"Sin truco. Si eres el Gurú, da una razón de verdad, limpia, y haz de Gurú igual. Si eres Ciudadano, esta carta no es la del Gurú.",qBk:"La pregunta",qDo:"Una vez por ronda, en el debate. Quien la coja primero se la hace a quien quiera. Hay que contestar.",
+ what:"Qué es",sounds:"Cómo suena",not:"No es lo mismo que",ask:"Pregunta para la mesa",q:"¿Y quién gana si me lo creo?",qs:["¿Y quién gana si me lo creo?","¿Cómo lo sabes?","¿Qué haría falta para que fuera verdad?"],hon:"Honesta",honDo:"Sin truco. El Gurú argumenta limpio y disimula igual; el Ciudadano sabe que esta carta no es la del Gurú. En The Pitch: vende solo con razones de verdad.",qBk:"La pregunta",qDo:"Una vez por ronda, en el debate. Quien la coja primero se la hace a quien quiera. Hay que contestar.",
  prod:"Vende esto",home:"Vende esto (de casa)",buyer:"Compras como",packBk:"Pack de trucos",
  sheet:"Cortad por las líneas grises. Imprimid a doble cara, girando por el borde largo.",front:"cara",back:"dorso",
  title:"Fool Me Once.",sub:"Dos juegos de cartas sobre los trucos que se usan en redes para venderte y convencerte. Versión de prueba 0.3, 16 de noviembre de 2026.",
@@ -87,6 +90,7 @@ var LOGO='<span class="logo">Fool Me Once.</span>';
 function bk(label,inv){return '<div class="c mid'+(inv?' inv':'')+'"><span class="bk">Fool Me<br>Once.</span><span class="p">'+label+'</span></div>'}
 function packOf(id){for(var i=0;i<E.packs.length;i++){var j=E.packs[i].ids.indexOf(id);if(j>=0)return {p:i+1,n:j+1}}}
 var cards=[];
+cards.push({f:'<div class="c mid"><span class="k" style="position:absolute;top:4.5mm;left:4.5mm;right:4.5mm"><span>Fool Me Once.</span></span><span class="t" style="font-size:15pt">'+M.boxFront+'</span><span class="p" style="font-size:10pt">'+M.boxFrontDo+'</span></div>',b:'<div class="c inv"><span class="t" style="font-size:15pt;color:#FFE600">'+M.boxBackH+'</span><span class="sm" style="font-size:8.1pt;line-height:1.3">'+M.boxBack+'</span></div>'});
 cards.push({f:'<div class="c inv"><span class="k"><span>'+P.role+'</span></span><span class="t" style="margin-top:6mm;color:#FFE600">'+P.guru+'</span><span class="p" style="font-size:11pt">'+P.guruDo+'</span>'+LOGO+'</div>',b:bk(P.role,1)});
 for(var i=0;i<5;i++)cards.push({f:'<div class="c"><span class="k"><span>'+P.role+'</span></span><span class="t" style="margin-top:6mm">'+P.cit+'</span><span class="p" style="font-size:11pt">'+P.citDo+'</span><span class="p">'+P.citTrick+'</span>'+LOGO+'</div>',b:bk(P.role,1)});
 P.qs.forEach(function(q){cards.push({f:'<div class="c mid inv"><span class="q" style="font-size:18pt">'+q+'</span></div>',b:'<div class="c mid"><span class="bk">'+P.qBk+'</span><span class="p">'+P.qDo+'</span></div>'})});
@@ -102,16 +106,24 @@ E.pitch.buyers.forEach(function(t){cards.push({f:'<div class="c inv"><span class
 var h='';
 function ol(a){return '<ol>'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol>'}
 function ul(a){return '<ul>'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
-h+='<div class="page doc"><h1>'+P.title+'</h1><p>'+P.sub+'</p><p>'+P.kit+'</p><h2>'+P.gH+'</h2><p class="box"><b>'+P.gIdea+'</b></p><div class="cols"><div><p>'+P.gSet+'</p>'+ol(P.gRound)+'</div><div>'+ul(P.gScore)+'<p style="margin-top:2mm">'+P.gEnd+'</p><h2>'+P.houseH+'</h2>'+ul(P.house)+'<h2>'+P.testH+'</h2><p class="box">'+P.test+'</p></div></div></div>';
-h+='<div class="page doc"><h2 style="margin-top:0">'+P.pH+'</h2><p class="box"><b>'+P.pIdea+'</b></p><div class="cols"><div><p>'+P.pSet+'</p>'+ol(P.pRound)+'</div><div>'+ul(P.pScore)+'<p style="margin-top:2mm">'+P.pEnd+'</p></div></div>';
+function pts(a){return '<table class="pts">'+a.map(function(x){return '<tr><td>'+x[0]+'</td><td class="x" style="text-align:center;font-weight:800">'+x[1]+'</td></tr>'}).join('')+'</table>'}
+function man(H,meta,idea,need,set,round,P2,end,ex,first){return '<div class="page doc"><h1>'+H+'</h1><p class="meta">'+meta+'</p><p class="box"><b>'+idea+'</b></p><div class="cols"><div><h2>'+M.needH+'</h2><p>'+need+'</p><h2>'+M.setH+'</h2>'+ol(set)+'<h2>'+M.roundH+'</h2>'+ol(round)+'</div><div><h2>'+M.ptsH+'</h2>'+pts(P2)+'<h2>'+M.endH+'</h2><p>'+end+'</p><h2>'+M.exH+'</h2><p class="box">'+ex+'</p><h2>'+M.firstH+'</h2><p>'+first+'</p></div></div></div>'}
+h+='<div class="page doc"><h1>'+P.title+'</h1><p class="meta">'+M.ver+'</p><p>'+M.kit+'</p><div class="cols" style="margin-top:4mm"><div><h2>The Guru</h2><p>'+M.gIdea+'</p><p class="meta">'+M.gMeta+'</p><h2>The Pitch</h2><p>'+M.pIdea+'</p><p class="meta">'+M.pMeta+'</p></div><div><h2>'+M.boxH+'</h2>'+ol(M.box)+'<h2>'+M.houseH+'</h2>'+ul(M.house)+'</div></div></div>';
+h+=man(M.gH,M.gMeta,M.gIdea,M.gNeed,M.gSet,M.gRound,M.gPts,M.gEnd,M.gEx,M.gFirst);
+h+=man(M.pH,M.pMeta,M.pIdea,M.pNeed,M.pSet,M.pRound,M.pPts,M.pEnd,M.pEx,M.pFirst);
 var cols='';for(var i=0;i<8;i++)cols+='<th class="x"></th>';
-h+='<h2>'+P.scoreSheet+'</h2><table><tr><th>'+P.player+'</th>'+[1,2,3,4,5,6,7,8].map(function(i){return '<th class="x">'+P.r+i+'</th>'}).join('')+'<th class="x">'+P.total+'</th></tr>'+[1,2,3,4,5,6,7,8].map(function(){return '<tr><td></td>'+'<td></td>'.repeat(9)+'</tr>'}).join('')+'</table></div>';
-h+='<div class="page doc"><h2 style="margin-top:0">'+P.albumSheet+'</h2><table><tr><th>'+P.trick+'</th>'+cols+'</tr>'+E.packs.flatMap(function(pk){return pk.ids.map(function(id,i){return '<tr><td>Pack '+pk.id+' · '+(i+1)+'. '+e(FMO.tricks[id-1][lang].name)+'</td>'+'<td></td>'.repeat(8)+'</tr>'})}).join('')+'</table></div>';
+h+='<div class="page doc"><h2 style="margin-top:0">'+M.scoreSheet+'</h2><table><tr><th>'+M.player+'</th>'+[1,2,3,4,5,6,7,8].map(function(i){return '<th class="x">'+M.r+i+'</th>'}).join('')+'<th class="x">'+M.total+'</th></tr>'+[1,2,3,4,5,6,7,8].map(function(){return '<tr><td></td>'+'<td></td>'.repeat(9)+'</tr>'}).join('')+'</table>';
+h+='<h2>'+M.albumSheet+'</h2><table><tr><th>'+M.trick+'</th>'+cols+'</tr>'+E.packs.flatMap(function(pk){return pk.ids.map(function(id,i){return '<tr><td>Pack '+pk.id+' · '+(i+1)+'. '+e(FMO.tricks[id-1][lang].name)+'</td>'+'<td></td>'.repeat(8)+'</tr>'})}).join('')+'</table></div>';
+var box=function(a){return a.map(function(x){return '<li>☐ '+x+'</li>'}).join('')};
+h+='<div class="page doc"><h1 style="font-size:20pt">'+M.famH+'</h1><p class="meta">'+M.famMeta+'</p><p class="box"><b>'+M.famBefore+'</b></p><h2>'+M.famPlanH+'</h2>'+ol(M.famPlan)+'<h2>'+M.famWatchH+'</h2><ul style="list-style:none;padding-left:0">'+box(M.famWatch)+'</ul><p class="box" style="margin-top:4mm">'+M.famLater+'</p></div>';
+h+='<div class="page doc"><h1 style="font-size:20pt">'+M.formH+'</h1><p>'+M.formWho+'</p><div class="line"></div>'+M.formQ.map(function(q,i){return '<h2>'+(i+1)+'. '+q+'</h2><div class="line"></div><div class="line"></div><div class="line"></div>'}).join('')+'<p class="box" style="margin-top:6mm">'+M.formSend+'</p></div>';
+if(ONLY!=='docs'){
 var sheets=Math.ceil(cards.length/9);
 for(var s=0;s<cards.length;s+=9){var set=cards.slice(s,s+9),n=s/9+1;
  h+='<div class="page"><div class="foot">Fool Me Once · '+n+'/'+sheets+' · '+P.front+' · '+P.sheet+'</div><div class="grid">'+set.map(function(c){return c.f}).join('')+'</div></div>';
  var m=[];for(var r=0;r<3;r++){var row=set.slice(r*3,r*3+3);while(row.length<3)row.push({b:'<div></div>'});m=m.concat(row.reverse())}
  h+='<div class="page"><div class="foot">Fool Me Once · '+n+'/'+sheets+' · '+P.back+'</div><div class="grid">'+m.map(function(c){return c.b}).join('')+'</div></div>';}
+}
 document.body.insertAdjacentHTML('beforeend',h);
 window.OVER=[].filter.call(document.querySelectorAll('.c,.doc'),function(el){return el.scrollHeight>el.clientHeight+1}).map(function(el){return el.textContent.slice(0,50)});
 </script></body></html>
